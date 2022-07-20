@@ -1,3 +1,6 @@
+// 즐겨찾기 페이지 수정함
+// -> 아래 내용을 mylist.dart 내용으로 수정해야 함
+
 import 'package:flutter/material.dart';
 import 'package:parking_spot_frontend/menu.dart';
 

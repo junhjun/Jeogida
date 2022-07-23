@@ -19,6 +19,9 @@ class _MyMenuState extends State<MyMenu> {
       if (_selectedIndex == 0) {
         Navigator.pushReplacementNamed(context, "/FindCar");
       }
+      if (_selectedIndex == 1) {
+        Navigator.pushReplacementNamed(context, "/FindSpace");
+      }
       if (_selectedIndex == 2) {
         Navigator.pushReplacementNamed(context, "/BookMarkView");
       }

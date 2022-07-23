@@ -16,6 +16,9 @@ class _MyMenuState extends State<MyMenu> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      if (_selectedIndex == 0) {
+        Navigator.pushReplacementNamed(context, "/FindCar");
+      }
       if (_selectedIndex == 2) {
         Navigator.pushReplacementNamed(context, "/BookMarkView");
       }

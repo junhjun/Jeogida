@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parking_spot_frontend/MyPageView.dart';
-import 'package:parking_spot_frontend/bookmark_view.dart';
+import 'package:parking_spot_frontend/BookMark/bookmark_view.dart';
 import 'package:parking_spot_frontend/change_password_view.dart';
 import 'package:parking_spot_frontend/home_view.dart';
 import 'package:parking_spot_frontend/login_view.dart';

@@ -7,7 +7,7 @@ import 'package:parking_spot_frontend/login_view.dart';
 
 import 'FindCar/find_car.dart';
 import 'FindCar/register_web_webview_stub.dart'
-    if (dart.library.html) 'register_web_webview.dart';
+    if (dart.library.html) 'FindCar/register_web_webview.dart';
 import 'FindSpace/find_space.dart';
 
 void main() {

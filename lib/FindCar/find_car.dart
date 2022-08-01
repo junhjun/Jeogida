@@ -51,6 +51,7 @@ class _MyAppState extends State<FindCar> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // DropDownButton
               Container(
                 padding: EdgeInsets.only(bottom: 20),
                 child: Container(
@@ -68,13 +69,13 @@ class _MyAppState extends State<FindCar> {
                             _selectedValue = value!;
                           });
                         },
-                        underline: null,
                         style: _dropdownTextStyle,
                         icon: _dropdownIcon,
                         iconEnabledColor: Colors.grey)),
               ),
+              // 주차장 관련 정보
               Container(
-                  padding: EdgeInsets.only(bottom: 30),
+                  padding: EdgeInsets.only(bottom: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -89,10 +90,12 @@ class _MyAppState extends State<FindCar> {
                           style: _infoTextStyle) // 주차 시간
                     ],
                   )),
+              // Divider
               Container(
-                padding: EdgeInsets.only(bottom: 30),
+                padding: EdgeInsets.only(bottom: 20),
                 child: const Divider(height: 10, color: Colors.grey),
               ),
+              // Icons
               Container(
                   child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -119,6 +122,7 @@ class _MyAppState extends State<FindCar> {
                   ),
                 ],
               )),
+              // WebView
               Flexible(
                 fit: FlexFit.tight,
                 child: WebView(
@@ -129,6 +133,11 @@ class _MyAppState extends State<FindCar> {
                     _controller = webViewController;
                   },
                 ),
+              ),
+              // Zoom info text
+              Center(
+                child: Text("지도를 클릭하면 확대해서 볼 수 있습니다.",
+                    style: TextStyle(color: Colors.grey)),
               )
             ],
           ),

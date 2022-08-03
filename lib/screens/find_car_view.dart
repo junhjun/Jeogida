@@ -1,28 +1,31 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:parking_spot_frontend/custom_app_bar.dart';
-import 'package:parking_spot_frontend/menu.dart';
+import 'package:parking_spot_frontend/utility/menu.dart';
+import 'package:parking_spot_frontend/widgets/custom_app_bar.dart';
+import 'package:parking_spot_frontend/widgets/web_view_widget.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import '../models/book_mark_car.dart';
+import '../widgets/book_mark_car_dropdown.dart';
+
+late BookMarkCar? selectedCar; // 현재 선택된 차량
 
 class FindCar extends StatefulWidget {
   static const String routeName = "/FindCar";
+
   @override
   State<FindCar> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<FindCar> {
-  late WebViewController _controller;
+  final controller = Completer<WebViewController>(); // WebViewController
 
-  final _valueList = ['20누 0856', '11가 1234', '22나 2345', '33다 3456'];
-  var _selectedValue = '20누 0856';
-  final _dropdownTextStyle = TextStyle(fontSize: 13, color: Colors.black);
-  final _dropdownIcon = Icon(Icons.arrow_drop_down, size: 30);
   var _currentArea = "B1층 A구역 30번";
   var _currentSpot = "개봉 현대아파트";
   var _parkingDuration = "3시간 30분";
   final _currentAreaTextStyle = const TextStyle(
       fontSize: 20, color: Colors.cyan, fontWeight: FontWeight.bold);
-  final _dropDownItemTextStyle =
-      const TextStyle(fontSize: 13, color: Colors.black);
   final _infoTextStyle = const TextStyle(fontSize: 15, color: Colors.grey);
 
   @override
@@ -52,27 +55,7 @@ class _MyAppState extends State<FindCar> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // DropDownButton
-              Container(
-                padding: EdgeInsets.only(bottom: 20),
-                child: Container(
-                    child: DropdownButton(
-                        value: _selectedValue,
-                        items: _valueList.map((value) {
-                          return DropdownMenuItem(
-                            value: value,
-                            child: Text('차량번호 | ' + value,
-                                style: _dropDownItemTextStyle),
-                          );
-                        }).toList(),
-                        onChanged: (String? value) {
-                          setState(() {
-                            _selectedValue = value!;
-                          });
-                        },
-                        style: _dropdownTextStyle,
-                        icon: _dropdownIcon,
-                        iconEnabledColor: Colors.grey)),
-              ),
+              Container(child: BookMarkCarWidget()),
               // 주차장 관련 정보
               Container(
                   padding: EdgeInsets.only(bottom: 20),
@@ -117,6 +100,8 @@ class _MyAppState extends State<FindCar> {
                         Container(
                             child: Text('주차 위치', style: _infoTextStyle),
                             padding: EdgeInsets.only(left: 5)),
+                        Container(
+                            child: WebViewControls(controller: controller)),
                       ],
                     ),
                   ),
@@ -125,14 +110,7 @@ class _MyAppState extends State<FindCar> {
               // WebView
               Flexible(
                 fit: FlexFit.tight,
-                child: WebView(
-                  initialUrl:
-                      "http://3.37.217.255:8080/swagger-ui/index.html#/",
-                  javascriptMode: JavascriptMode.unrestricted,
-                  onWebViewCreated: (WebViewController webViewController) {
-                    _controller = webViewController;
-                  },
-                ),
+                child: WebViewStack(controller: controller),
               ),
               // Zoom info text
               Center(

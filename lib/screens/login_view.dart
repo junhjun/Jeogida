@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parking_spot_frontend/custom_app_bar.dart';
+import 'package:parking_spot_frontend/widgets/custom_app_bar.dart';
 
 class LoginView extends StatelessWidget {
   static const String routeName = "/LoginView";

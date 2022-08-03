@@ -15,6 +15,18 @@ class _MyAppState extends State<FindSpace> {
 
   final _valueList = ['개봉현대아파트', '스타필드코엑스몰', '아파트2', '아파트3'];
   var _selectedValue = '개봉현대아파트';
+  final _iconTextStye = TextStyle(color: Colors.grey, fontSize: 12);
+  final _disabledButtonStyle = ElevatedButton.styleFrom(
+      shape: const CircleBorder(),
+      primary: Colors.grey[300],
+      onSurface: Colors.black);
+  final _disabledTextStyle = TextStyle(
+      color: Colors.grey[600], fontSize: 15, fontWeight: FontWeight.bold);
+  final _activeButtonStyle = ElevatedButton.styleFrom(
+      shape: const CircleBorder(), primary: Colors.cyan);
+  final _activeTextStyle =
+      TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold);
+  List<bool> selected = List.generate(3, (index) => false);
 
   @override
   Widget build(BuildContext context) {
@@ -23,200 +35,151 @@ class _MyAppState extends State<FindSpace> {
       appBar: CustomAppBar(appBar: AppBar(), title: "주차공간 찾기"),
       bottomNavigationBar: MyMenu(selectedIndex: 1),
       body: Container(
-        alignment: Alignment.center,
-        margin: EdgeInsets.fromLTRB(20, 30, 20, 70),
-        padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+        margin: EdgeInsets.all(30),
         decoration: BoxDecoration(
-            border: Border.all(color: Color(0xffe3e2e2)),
+            border: Border.all(color: Colors.grey),
             borderRadius: BorderRadius.all(Radius.circular(8.0))),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 주차공간 드롭다운 버튼
-            Container(
-                width: 170,
-                height: 25,
-                alignment: Alignment.center,
-                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xffd2d0d0)),
-                    borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                child: DropdownButton(
-                    value: _selectedValue,
-                    items: _valueList.map((value) {
-                      return DropdownMenuItem(
-                        value: value,
-                        child: Text('위치 | ' + value),
-                      );
-                    }).toList(),
-                    onChanged: (String? value) {
-                      setState(() {
-                        _selectedValue = value!;
-                      });
-                    },
-                    underline: Container(), // 밑 줄 제거
-                    style: TextStyle(fontSize: 13, color: Colors.black),
-                    icon: Padding(
-                      padding: EdgeInsets.all(0),
-                      child: Icon(Icons.arrow_drop_down, size: 23),
-                    ),
-                    iconEnabledColor: Colors.grey)),
-
-            // 주차공간 정보
-            Container(
-              width: 220,
-              height: 90,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.grey),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey, blurRadius: 5, offset: Offset(4, 8))
+              ],
+              borderRadius: BorderRadius.all(Radius.circular(8.0))),
+          padding: EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // DropDownButton
+              Container(
+                padding: EdgeInsets.only(bottom: 20),
+                child: Container(
+                    child: DropdownButton(
+                        value: _selectedValue,
+                        items: _valueList.map((value) {
+                          return DropdownMenuItem(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String? value) {
+                          setState(() {
+                            _selectedValue = value!;
+                          });
+                        },
+                        style: TextStyle(fontSize: 13, color: Colors.black),
+                        icon: Icon(Icons.arrow_drop_down, size: 30),
+                        iconEnabledColor: Colors.grey)),
+              ),
+              // Parking lot Elevated Button
+              Container(
+                padding: EdgeInsets.only(bottom: 20),
+                child: ToggleButtons(
+                  borderColor: Colors.white,
+                  children: <Widget>[
+                    ElevatedButton(
+                        onPressed: () {},
+                        style: _disabledButtonStyle,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Column(
+                            children: <Widget>[
+                              Text("B1", style: _disabledTextStyle),
+                              Text("14석", style: _disabledTextStyle)
+                            ],
+                          ),
+                        )),
+                    ElevatedButton(
+                        onPressed: () {},
+                        style: _disabledButtonStyle,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Column(
+                            children: <Widget>[
+                              Text("B2", style: _disabledTextStyle),
+                              Text("30석", style: _disabledTextStyle)
+                            ],
+                          ),
+                        )),
+                    ElevatedButton(
+                        onPressed: () {},
+                        style: _disabledButtonStyle,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Column(
+                            children: <Widget>[
+                              Text("B3", style: _disabledTextStyle),
+                              Text("50석", style: _disabledTextStyle)
+                            ],
+                          ),
+                        )),
+                  ],
+                  onPressed: (int index) {
+                    setState(() {
+                      selected[index] = !selected[index];
+                      if (index == 0 && selected[index]) {}
+                    });
+                  },
+                  isSelected: selected,
+                ),
+              ), // TODO - OnPressed Method
+              // Divider
+              Container(
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: Divider(color: Colors.grey, height: 5)),
+              // Icons
+              Container(
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Container(
-                    width: 70,
-                    height: 70,
-                    decoration: BoxDecoration(
-                        color: Color(0xff53bbcc),
-                        borderRadius: BorderRadius.circular(50)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: Row(
                       children: [
-                        Text('B1',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 25,
-                                fontWeight: FontWeight.w500)),
-                        Text('14석',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400)),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                        color: Color(0xffe5e3e3),
-                        borderRadius: BorderRadius.circular(50)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text('B2',
-                            style: TextStyle(
-                                color: Color(0xff7c7b7b),
-                                fontSize: 23,
-                                fontWeight: FontWeight.w500)),
-                        Text('30석',
-                            style: TextStyle(
-                                color: Color(0xff7c7b7b),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400)),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                        color: Color(0xffe5e3e3),
-                        borderRadius: BorderRadius.circular(50)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text('B3',
-                            style: TextStyle(
-                                color: Color(0xff7c7b7b),
-                                fontSize: 23,
-                                fontWeight: FontWeight.w500)),
-                        Text('50석',
-                            style: TextStyle(
-                                color: Color(0xff7c7b7b),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400)),
+                        TextButton.icon(
+                          onPressed: null,
+                          icon: Icon(Icons.rectangle,
+                              size: 14, color: Colors.green),
+                          label: Text("주차 가능", style: _iconTextStye),
+                        ),
+                        TextButton.icon(
+                          onPressed: null,
+                          icon: Icon(Icons.rectangle,
+                              size: 14, color: Colors.yellow),
+                          label: Text("장애인 구역", style: _iconTextStye),
+                        ),
+                        TextButton.icon(
+                          onPressed: null,
+                          icon: Icon(Icons.rectangle,
+                              size: 14, color: Colors.grey),
+                          label: Text("주차 불가", style: _iconTextStye),
+                        ),
                       ],
                     ),
                   ),
                 ],
-              ),
-            ),
-
-            // 아이콘 정보
-            Container(
-                height: 60,
-                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                decoration: BoxDecoration(
-                    border: Border(top: BorderSide(color: Color(0xffe3e2e2)))),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                      child: Row(
-                        children: [
-                          Icon(Icons.rectangle,
-                              size: 14, color: Color(0xff62b946)),
-                          Text('주차 가능',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12))
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                      child: Row(
-                        children: [
-                          Icon(Icons.rectangle,
-                              size: 14, color: Color(0xfffada4f)),
-                          Text('장애인 구역',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12))
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                      child: Row(
-                        children: [
-                          Icon(Icons.rectangle,
-                              size: 14, color: Color(0xff2e4911)),
-                          Text('주차 불가',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12))
-                        ],
-                      ),
-                    ),
-                  ],
-                )),
-
-            // 웹뷰
-            Container(
-                alignment: Alignment.center,
-                child: Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Color(0xffe3e2e2))),
-                      width: 350,
-                      height: 250,
-                      child: WebView(
-                        initialUrl:
-                            "http://3.37.217.255:8080/swagger-ui/index.html#/",
-                        javascriptMode: JavascriptMode.unrestricted,
-                        onWebViewCreated:
-                            (WebViewController webViewController) {
-                          _controller = webViewController;
-                        },
-                      ),
-                    ),
-                    Text('지도를 클릭하면 확대해서 볼 수 있습니다',
-                        style: TextStyle(color: Colors.grey, fontSize: 12))
-                  ],
-                ))
-          ],
+              )),
+              // WebView
+              Flexible(
+                  fit: FlexFit.tight,
+                  child: WebView(
+                    initialUrl:
+                        "http://3.37.217.255:8080/swagger-ui/index.html#/",
+                    javascriptMode: JavascriptMode.unrestricted,
+                    onWebViewCreated: (WebViewController webViewController) {
+                      _controller = webViewController;
+                    },
+                  )),
+              // Zoom info text
+              Center(
+                child: Text('지도를 클릭하면 확대해서 볼 수 있습니다',
+                    style: TextStyle(color: Colors.grey)),
+              )
+            ],
+          ),
         ),
       ),
     );

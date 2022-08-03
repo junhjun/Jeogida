@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:parking_spot_frontend/menu.dart';
+import 'package:parking_spot_frontend/utility/menu.dart';
 
 class BookMarkView extends StatefulWidget {
   static const String routeName = "/BookMarkView";

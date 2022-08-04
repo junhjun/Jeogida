@@ -20,7 +20,8 @@ class _WebViewStackState extends State<WebViewStack> {
     return Stack(
       children: [
         WebView(
-          initialUrl: "http://3.37.217.255:8080/swagger-ui/index.html#/",
+          initialUrl:
+              "http://3.37.217.255:8080/swagger-ui/index.html#/", // api page
           javascriptMode: JavascriptMode.unrestricted,
           onPageStarted: (url) {
             setState(() {

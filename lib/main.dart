@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:parking_spot_frontend/BookMark/bookmark_view.dart';
-import 'package:parking_spot_frontend/MyPageView.dart';
-import 'package:parking_spot_frontend/change_password_view.dart';
-import 'package:parking_spot_frontend/home_view.dart';
-import 'package:parking_spot_frontend/login_view.dart';
+import 'package:parking_spot_frontend/screens/bookmark_view.dart';
+import 'package:parking_spot_frontend/screens/change_password_view.dart';
+import 'package:parking_spot_frontend/screens/login_view.dart';
+import 'package:parking_spot_frontend/screens/mypage_view.dart';
 
-import 'FindCar/find_car.dart';
-import 'FindCar/register_web_webview_stub.dart'
-    if (dart.library.html) 'FindCar/register_web_webview.dart';
-import 'FindSpace/find_space.dart';
+import 'screens/find_car_view.dart';
+import 'screens/find_space_view.dart';
+import 'utility/register_web_webview_stub.dart'
+    if (dart.library.html) 'utility/register_web_webview.dart';
 
 void main() {
   registerWebViewWebImplementation();
@@ -34,7 +33,7 @@ void main() {
         }
       },
       onUnknownRoute: (RouteSettings settings) {
-        return MaterialPageRoute(builder: (context) => HomeView());
+        return MaterialPageRoute(builder: (context) => FindCar());
       },
     ),
   );

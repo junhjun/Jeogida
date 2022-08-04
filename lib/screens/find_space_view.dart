@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:parking_spot_frontend/custom_app_bar.dart';
-import 'package:parking_spot_frontend/menu.dart';
+import 'package:parking_spot_frontend/utility/menu.dart';
+import 'package:parking_spot_frontend/widgets/custom_app_bar.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import '../widgets/web_view_widget.dart';
 
 class FindSpace extends StatefulWidget {
   static const String routeName = "/FindSpace";
@@ -11,8 +15,7 @@ class FindSpace extends StatefulWidget {
 }
 
 class _MyAppState extends State<FindSpace> {
-  late WebViewController _controller;
-
+  final controller = Completer<WebViewController>(); // WebView Controller
   final _valueList = ['개봉현대아파트', '스타필드코엑스몰', '아파트2', '아파트3'];
   var _selectedValue = '개봉현대아파트';
   final _iconTextStye = TextStyle(color: Colors.grey, fontSize: 12);
@@ -79,6 +82,7 @@ class _MyAppState extends State<FindSpace> {
                 padding: EdgeInsets.only(bottom: 20),
                 child: ToggleButtons(
                   borderColor: Colors.white,
+                  borderRadius: BorderRadius.circular(10.0),
                   children: <Widget>[
                     ElevatedButton(
                         onPressed: () {},
@@ -165,14 +169,7 @@ class _MyAppState extends State<FindSpace> {
               // WebView
               Flexible(
                   fit: FlexFit.tight,
-                  child: WebView(
-                    initialUrl:
-                        "http://3.37.217.255:8080/swagger-ui/index.html#/",
-                    javascriptMode: JavascriptMode.unrestricted,
-                    onWebViewCreated: (WebViewController webViewController) {
-                      _controller = webViewController;
-                    },
-                  )),
+                  child: WebViewStack(controller: controller)),
               // Zoom info text
               Center(
                 child: Text('지도를 클릭하면 확대해서 볼 수 있습니다',

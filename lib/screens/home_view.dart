@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:parking_spot_frontend/custom_app_bar.dart';
-import 'package:parking_spot_frontend/menu.dart';
+import 'package:parking_spot_frontend/utility/menu.dart';
+import 'package:parking_spot_frontend/widgets/custom_app_bar.dart';
 
 class HomeView extends StatelessWidget {
   static const String routeName = "/home";

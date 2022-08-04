@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<network-security_config>
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">http://3.37.217.255:8080/swagger-ui/index.html#/</domain>
-        <domain includeSubdomains="true">http://3.37.217.255:8080/</domain>
-    </domain-config>
-</network-security_config>

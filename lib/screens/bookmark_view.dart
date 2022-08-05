@@ -2,10 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:parking_spot_frontend/utility/menu.dart';
 
 class BookMarkView extends StatefulWidget {
-  static const String routeName = "/BookMarkView";
   const BookMarkView({Key? key}) : super(key: key);
 
   @override
@@ -317,7 +315,6 @@ class _BookMarkViewState extends State<BookMarkView> {
               ),
             ]),
           ),
-          bottomNavigationBar: MyMenu(selectedIndex: 2),
           floatingActionButton: Container(
             height: 200,
             child: Column(

@@ -24,8 +24,8 @@ class _MainWidgetState extends State<MainWidget> {
   final bodyList = [
     FindCar(),
     FindSpace(),
-    BookMarkView(),
-    MyPageView()
+    const BookMarkView(),
+    const MyPageView()
   ]; // Page Lists
 
   final titles = ["내 차 찾기", "주차공간 찾기", "즐겨찾기", "마이페이지"]; // AppBar titles
@@ -36,10 +36,11 @@ class _MainWidgetState extends State<MainWidget> {
   void onTap(int index) {
     setState(() {
       currentIndex = index;
-      if (index == 2)
+      if (index == 2) {
         customAppBar = null;
-      else
+      } else {
         customAppBar = CustomAppBar(title: titles[currentIndex]);
+      }
     });
   }
 
@@ -47,6 +48,7 @@ class _MainWidgetState extends State<MainWidget> {
   void initState() {
     super.initState();
     currentIndex = 0;
+    customAppBar = CustomAppBar(title: titles[currentIndex]);
   }
 
   @override

@@ -15,11 +15,10 @@ class User {
 
   @override
   String toString() {
-    // TODO: implement toString
-    print("displayName : " + displayName.toString());
-    print("email : " + email.toString());
-    print("id : " + id.toString());
-    print("photoUrl : " + photoUrl.toString());
-    return super.toString();
+    var result = "displayName : ${displayName.toString()}\n" +
+        "email : ${email.toString()}\n" +
+        "id : ${id.toString()}\n" +
+        "photoUrl : ${photoUrl.toString()}";
+    return result;
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:parking_spot_frontend/main.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewStack extends StatefulWidget {
@@ -21,7 +22,7 @@ class _WebViewStackState extends State<WebViewStack> {
       children: [
         WebView(
           initialUrl:
-              "http://ec2-3-37-217-255.ap-northeast-2.compute.amazonaws.com:8081/5", // api page
+              "http://ec2-3-37-217-255.ap-northeast-2.compute.amazonaws.com:8081/5", // webview initial page
           javascriptMode: JavascriptMode.unrestricted,
           onPageStarted: (url) {
             setState(() {
@@ -64,11 +65,11 @@ class WebViewControls extends StatelessWidget {
         final WebViewController? controller = snapshot.data;
         if (snapshot.connectionState != ConnectionState.done ||
             controller == null) {
-          return Icon(Icons.replay);
+          return const Icon(Icons.replay);
         }
         return IconButton(
             onPressed: () async {
-              print("WebView reload");
+              logger.i("refresh webview");
               controller.reload();
             },
             icon: const Icon(Icons.replay));

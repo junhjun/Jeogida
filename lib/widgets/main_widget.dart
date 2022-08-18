@@ -15,10 +15,14 @@ class MainWidget extends StatefulWidget {
 
 class _MainWidgetState extends State<MainWidget> {
   final items = const <BottomNavigationBarItem>[
-    BottomNavigationBarItem(icon: Icon(Icons.explore), label: "내 차 찾기"),
-    BottomNavigationBarItem(icon: Icon(Icons.search), label: "주차공간 찾기"),
-    BottomNavigationBarItem(icon: Icon(Icons.star_border), label: "즐겨찾기"),
-    BottomNavigationBarItem(icon: Icon(Icons.person), label: "마이페이지")
+    BottomNavigationBarItem(
+        icon: Icon(Icons.explore_outlined), label: "내 차 찾기"),
+    BottomNavigationBarItem(
+        icon: Icon(Icons.search_outlined), label: "주차공간 찾기"),
+    BottomNavigationBarItem(
+        icon: Icon(Icons.star_outline_rounded), label: "즐겨찾기"),
+    BottomNavigationBarItem(
+        icon: Icon(Icons.person_outline_rounded), label: "마이페이지")
   ];
 
   final bodyList = [

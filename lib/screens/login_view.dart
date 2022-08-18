@@ -7,10 +7,10 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ButtonStyle = ElevatedButton.styleFrom(
+    final buttonStyle = ElevatedButton.styleFrom(
         primary: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)));
-    final textStyle = TextStyle(
+    const textStyle = TextStyle(
         color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15);
 
     return MaterialApp(
@@ -18,7 +18,7 @@ class LoginView extends StatelessWidget {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Center(child: Image(image: AssetImage("assets/logo.png"))),
+            const Center(child: Image(image: AssetImage("assets/logo.png"))),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -27,15 +27,15 @@ class LoginView extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.05,
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      print("Login API Called");
+                      logger.i("Login API Called");
                       handleLogIn();
                     },
-                    icon: Image(
+                    icon: const Image(
                         image: AssetImage("assets/google.png"),
                         width: 20,
                         height: 20),
-                    label: Text("구글로 계속하기", style: textStyle),
-                    style: ButtonStyle,
+                    label: const Text("구글로 계속하기", style: textStyle),
+                    style: buttonStyle,
                   ),
                 ),
               ],

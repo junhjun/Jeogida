@@ -17,7 +17,7 @@ class _MyPageViewState extends State<MyPageView> {
     padding: const EdgeInsets.all(0.0),
     textStyle: const TextStyle(fontSize: 25),
   );
-  final infoTextStyle = TextStyle(fontSize: 20);
+  final infoTextStyle = const TextStyle(fontSize: 20);
 
   @override
   Widget build(BuildContext context) {
@@ -30,26 +30,26 @@ class _MyPageViewState extends State<MyPageView> {
           Center(
             child: CircleAvatar(
               radius: MediaQuery.of(context).size.width * 0.1,
-              backgroundImage: NetworkImage(user!.photoUrl!),
+              backgroundImage: NetworkImage(user.photoUrl!),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Center(
             child: Container(
-              padding: EdgeInsets.only(bottom: 20.0),
-              child: Text(user!.displayName!, style: nameTextStyle),
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: Text(user.displayName!, style: nameTextStyle),
             ),
           ),
           Row(
             children: [
               Icon(Icons.email, color: iconColor),
-              Text(" " + user!.email!, style: infoTextStyle)
+              Text(" ${user.email!}", style: infoTextStyle)
             ],
           ),
           TextButton.icon(
             onPressed: () {
               handleLogOut();
-              print("Logout API Called");
+              logger.i("Logout API Called");
             },
             icon: Icon(Icons.logout, color: iconColor),
             label: Text("로그아웃", style: infoTextStyle),

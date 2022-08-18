@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parking_spot_frontend/main.dart';
 
 class MyPageView extends StatefulWidget {
   const MyPageView({Key? key}) : super(key: key);
@@ -14,43 +15,44 @@ class _MyPageViewState extends State<MyPageView> {
   final buttonStyle = TextButton.styleFrom(
     primary: Colors.black,
     padding: const EdgeInsets.all(0.0),
-    textStyle: const TextStyle(fontSize: 20),
+    textStyle: const TextStyle(fontSize: 25),
   );
-
-  String name = "한이음님";
-  String email = "hanium@naver.com";
+  final infoTextStyle = TextStyle(fontSize: 20);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 50),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(bottom: 30.0),
-            child: Text(name, style: nameTextStyle),
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: CircleAvatar(
+              radius: MediaQuery.of(context).size.width * 0.1,
+              backgroundImage: NetworkImage(user!.photoUrl!),
+            ),
+          ),
+          SizedBox(height: 20),
+          Center(
+            child: Container(
+              padding: EdgeInsets.only(bottom: 20.0),
+              child: Text(user!.displayName!, style: nameTextStyle),
+            ),
+          ),
+          Row(
+            children: [
+              Icon(Icons.email, color: iconColor),
+              Text(" " + user!.email!, style: infoTextStyle)
+            ],
           ),
           TextButton.icon(
-            onPressed: () {},
-            icon: Icon(Icons.email, color: iconColor),
-            label: Text(email),
-            style: buttonStyle,
-          ),
-          // TextButton.icon(
-          //   onPressed: () {
-          //     Navigator.pushReplacementNamed(
-          //         context, ChangePasswordView.routeName);
-          //   },
-          //   icon: Icon(Icons.settings, color: iconColor),
-          //   label: const Text("비밀번호 변경"),
-          //   style: buttonStyle,
-          // ),
-          TextButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              handleLogOut();
+              print("Logout API Called");
+            },
             icon: Icon(Icons.logout, color: iconColor),
-            label: const Text("로그아웃"),
+            label: Text("로그아웃", style: infoTextStyle),
             style: buttonStyle,
           ),
         ],

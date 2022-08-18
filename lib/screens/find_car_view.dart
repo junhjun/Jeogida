@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:parking_spot_frontend/models/book_mark_car.dart';
+import 'package:parking_spot_frontend/screens/webview_zoom_view.dart';
 import 'package:parking_spot_frontend/widgets/web_view_widget.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -10,6 +11,8 @@ import '../widgets/book_mark_car_dropdown.dart';
 late BookMarkCar? selectedCar;
 
 class FindCar extends StatefulWidget {
+  const FindCar({Key? key}) : super(key: key);
+
   @override
   State<FindCar> createState() => _MyAppState();
 }
@@ -103,9 +106,21 @@ class _MyAppState extends State<FindCar> {
               child: WebViewStack(controller: controller),
             ),
             // Zoom info text
+            // Center(
+            //   child: Text("지도를 클릭하면 확대해서 볼 수 있습니다.",
+            //       style: TextStyle(color: Colors.grey)),
+            // ),
             Center(
-              child: Text("지도를 클릭하면 확대해서 볼 수 있습니다.",
-                  style: TextStyle(color: Colors.grey)),
+              child: TextButton(
+                style: TextButton.styleFrom(primary: Colors.grey),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => WebViewZoomView()),
+                  );
+                },
+                child: const Text("여기를 클릭하면 확대해서 볼 수 있습니다."),
+              ),
             )
           ],
         ),

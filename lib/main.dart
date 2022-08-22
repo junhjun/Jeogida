@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:parking_spot_frontend/screens/bookmark_view.dart';
-import 'package:parking_spot_frontend/screens/find_car_view.dart';
-import 'package:parking_spot_frontend/screens/find_space_view.dart';
-import 'package:parking_spot_frontend/screens/mypage_view.dart';
-import 'package:parking_spot_frontend/widgets/custom_app_bar_widget.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:parking_spot_frontend/screens/login_view.dart';
+import 'package:parking_spot_frontend/widgets/main_widget.dart';
 
+import 'models/user.dart';
 import 'utility/register_web_webview_stub.dart'
     if (dart.library.html) 'utility/register_web_webview.dart';
+
+GoogleSignIn _googleSignIn = GoogleSignIn(scopes: <String>[
+  'email',
+]);
+
+Future<void> handleLogIn() async {
+  try {
+    await _googleSignIn.signIn();
+  } catch (error) {
+    print(error);
+  }
+}
+
+Future<void> handleLogOut() => _googleSignIn.signOut();
+
+late User? user;
 
 void main() {
   registerWebViewWebImplementation();
@@ -21,58 +36,38 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final items = const <BottomNavigationBarItem>[
-    BottomNavigationBarItem(icon: Icon(Icons.explore), label: "내 차 찾기"),
-    BottomNavigationBarItem(icon: Icon(Icons.search), label: "주차공간 찾기"),
-    BottomNavigationBarItem(icon: Icon(Icons.star_border), label: "즐겨찾기"),
-    BottomNavigationBarItem(icon: Icon(Icons.person), label: "마이페이지")
-  ];
-  final bodyList = [
-    FindCar(),
-    FindSpace(),
-    BookMarkView(),
-    MyPageView()
-  ]; // Page Lists
-  final titles = ["내 차 찾기", "주차공간 찾기", "즐겨찾기", "마이페이지"]; // AppBar titles
-  var currentIndex;
-  var customAppBar;
-
-  void onTap(int index) {
-    setState(() {
-      currentIndex = index;
-      if (index == 2)
-        customAppBar = null;
-      else
-        customAppBar = CustomAppBar(title: titles[currentIndex]);
-    });
-  }
+  GoogleSignInAccount? _currentUser;
 
   @override
   void initState() {
     super.initState();
-    currentIndex = 0;
-    customAppBar = CustomAppBar(title: titles[currentIndex]);
+    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
+      setState(() {
+        _currentUser = account;
+      });
+      if (_currentUser != null) {
+        user = User(_currentUser?.displayName, _currentUser?.email,
+            _currentUser?.id, _currentUser?.photoUrl);
+        print(user.toString());
+      }
+    });
+    _googleSignIn.signInSilently();
+  }
+
+  Widget _buildBody() {
+    final GoogleSignInAccount? user = _currentUser;
+    if (user != null) {
+      return MainWidget();
+    } else {
+      return LoginView();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: customAppBar,
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          items: items,
-          currentIndex: currentIndex,
-          onTap: onTap,
-          unselectedItemColor: Colors.grey,
-          selectedItemColor: Colors.cyan,
-        ),
-        body: IndexedStack(
-          index: currentIndex,
-          children: bodyList,
-        ),
-      ),
+      debugShowCheckedModeBanner: false,
+      home: _buildBody(),
     );
   }
 }

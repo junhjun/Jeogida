@@ -21,7 +21,7 @@ class _WebViewStackState extends State<WebViewStack> {
       children: [
         WebView(
           initialUrl:
-              "http://3.37.217.255:8080/swagger-ui/index.html#/", // api page
+              "http://ec2-3-37-217-255.ap-northeast-2.compute.amazonaws.com:8081/5", // api page
           javascriptMode: JavascriptMode.unrestricted,
           onPageStarted: (url) {
             setState(() {
@@ -43,7 +43,9 @@ class _WebViewStackState extends State<WebViewStack> {
           },
         ),
         if (loadingPercentage < 100)
-          CircularProgressIndicator(value: loadingPercentage / 100.0)
+          Center(
+              child:
+                  CircularProgressIndicator(value: loadingPercentage / 100.0))
       ],
     );
   }
@@ -66,7 +68,7 @@ class WebViewControls extends StatelessWidget {
         }
         return IconButton(
             onPressed: () async {
-              print("reload");
+              print("WebView reload");
               controller.reload();
             },
             icon: const Icon(Icons.replay));

@@ -1,9 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:parking_spot_frontend/models/book_mark_space.dart';
+import 'package:parking_spot_frontend/widgets/book_mark_space_dropdown.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../widgets/web_view_widget.dart';
+
+late BookMarkSpace? selectedSpace;
 
 class FindSpace extends StatefulWidget {
   @override
@@ -49,26 +53,7 @@ class _MyAppState extends State<FindSpace> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // DropDownButton
-            Container(
-              padding: EdgeInsets.only(bottom: 20),
-              child: Container(
-                  child: DropdownButton(
-                      value: _selectedValue,
-                      items: _valueList.map((value) {
-                        return DropdownMenuItem(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (String? value) {
-                        setState(() {
-                          _selectedValue = value!;
-                        });
-                      },
-                      style: TextStyle(fontSize: 13, color: Colors.black),
-                      icon: Icon(Icons.arrow_drop_down, size: 30),
-                      iconEnabledColor: Colors.grey)),
-            ),
+            Container(child: BookMarkSpaceWidget()),
             // Parking lot Elevated Button
             Container(
               padding: EdgeInsets.only(bottom: 20),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
+import 'package:parking_spot_frontend/providers/user_provider.dart';
 import 'package:parking_spot_frontend/screens/login_view.dart';
 import 'package:parking_spot_frontend/widgets/main_widget.dart';
 
@@ -20,13 +21,13 @@ Future<void> handleLogIn() async {
   try {
     await _googleSignIn.signIn();
   } catch (error) {
-    logger.e(error);
+    logger.e("Login Error: ${error}");
   }
 }
 
 Future<void> handleLogOut() => _googleSignIn.signOut();
 
-late User? user; // user data
+late User user; // user data
 
 void main() {
   registerWebViewWebImplementation();
@@ -53,7 +54,9 @@ class _MyAppState extends State<MyApp> {
       if (_currentUser != null) {
         user = User(_currentUser?.displayName, _currentUser?.email,
             _currentUser?.id, _currentUser?.photoUrl);
-        logger.i(user.toString());
+        UserProvider.postUser(user);
+        logger.i("Login Successed");
+        logger.i("User Info\n${user.toString()}");
       }
     });
     _googleSignIn.signInSilently();

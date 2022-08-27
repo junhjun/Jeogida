@@ -4,21 +4,24 @@ class User {
   String? id;
   String? photoUrl;
 
-  User(this.displayName, this.email, this.id, this.photoUrl);
+  User(this.displayName, this.email, this.id, this.photoUrl) {
+    photoUrl ??=
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREgQfgTOLnvNfd2u93zEUpsfW3z3AG1rcWJA&usqp=CAU";
+  }
 
   Map<String, dynamic> toJson() => {
-        'displayName': displayName,
+        'code': id,
         'email': email,
-        'id': id,
-        'photoUrl': photoUrl
+        'nickname': displayName,
+        'photo_url': photoUrl
       };
 
   @override
   String toString() {
-    var result = "displayName : ${displayName.toString()}\n" +
-        "email : ${email.toString()}\n" +
-        "id : ${id.toString()}\n" +
-        "photoUrl : ${photoUrl.toString()}";
+    var result = """displayName : ${displayName.toString()}
+email : ${email.toString()}
+id : ${id.toString()}
+photoUrl : ${photoUrl.toString()}""";
     return result;
   }
 }

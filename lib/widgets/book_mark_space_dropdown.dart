@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:parking_spot_frontend/models/book_mark_space.dart';
 
 import '../models/book_mark_space_list.dart';
-import '../providers/book_mark_provider.dart';
+import '../services/bookmark_service.dart';
 import '../screens/find_space_view.dart';
 
 class BookMarkSpaceWidget extends StatefulWidget {
@@ -20,7 +20,7 @@ class _BookMarkSpaceWidgetState extends State<BookMarkSpaceWidget> {
   @override
   void initState() {
     super.initState();
-    bookMarkModel = BookMarkProvider.getBookmarkSpaceList();
+    bookMarkModel = BookMarkService.getBookmarkSpaceList();
     selectedSpace = null;
   }
 

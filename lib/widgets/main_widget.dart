@@ -26,7 +26,7 @@ class _MainWidgetState extends State<MainWidget> {
   ];
 
   final bodyList = [
-    FindCar(),
+    const FindCar(),
     FindSpace(),
     const BookMarkView(),
     const MyPageView()

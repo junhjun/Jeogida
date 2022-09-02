@@ -18,10 +18,9 @@ class User {
 
   @override
   String toString() {
-    var result = """displayName : ${displayName.toString()}
-email : ${email.toString()}
-id : ${id.toString()}
-photoUrl : ${photoUrl.toString()}""";
-    return result;
+    return 'displayName : ${displayName.toString()}\n'
+        'email : ${email.toString()}\n'
+        'id : ${id.toString()}\n'
+        'photoUrl : ${photoUrl.toString()}';
   }
 }

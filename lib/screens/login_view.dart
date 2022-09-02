@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../main.dart';
+import 'package:logger/logger.dart';
+import 'package:parking_spot_frontend/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -12,6 +13,7 @@ class LoginView extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)));
     const textStyle = TextStyle(
         color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15);
+    var logger = Logger(printer: PrettyPrinter(methodCount: 0, colors: false));
 
     return MaterialApp(
       home: Scaffold(
@@ -22,13 +24,13 @@ class LoginView extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
                   height: MediaQuery.of(context).size.height * 0.05,
                   child: ElevatedButton.icon(
                     onPressed: () {
                       logger.i("Login API Called");
-                      handleLogIn();
+                      context.read<UserProvider>().handleLogIn();
                     },
                     icon: const Image(
                         image: AssetImage("assets/google.png"),

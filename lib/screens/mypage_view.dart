@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:parking_spot_frontend/main.dart';
+import 'package:logger/logger.dart';
+import 'package:parking_spot_frontend/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class MyPageView extends StatefulWidget {
   const MyPageView({Key? key}) : super(key: key);
@@ -18,9 +20,11 @@ class _MyPageViewState extends State<MyPageView> {
     textStyle: const TextStyle(fontSize: 25),
   );
   final infoTextStyle = const TextStyle(fontSize: 20);
+  var logger = Logger(printer: PrettyPrinter(methodCount: 0, colors: false));
 
   @override
   Widget build(BuildContext context) {
+    // logger.i(context.watch<UserProvider>().user);
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 50),
       child: Column(
@@ -30,25 +34,28 @@ class _MyPageViewState extends State<MyPageView> {
           Center(
             child: CircleAvatar(
               radius: MediaQuery.of(context).size.width * 0.1,
-              backgroundImage: NetworkImage(user.photoUrl!),
+              backgroundImage:
+                  NetworkImage(context.watch<UserProvider>().user!.photoUrl!),
             ),
           ),
           const SizedBox(height: 20),
           Center(
             child: Container(
               padding: const EdgeInsets.only(bottom: 20.0),
-              child: Text(user.displayName!, style: nameTextStyle),
+              child: Text(context.watch<UserProvider>().user!.displayName!,
+                  style: nameTextStyle),
             ),
           ),
           Row(
             children: [
               Icon(Icons.email, color: iconColor),
-              Text(" ${user.email!}", style: infoTextStyle)
+              Text(" ${context.watch<UserProvider>().user!.email!}",
+                  style: infoTextStyle)
             ],
           ),
           TextButton.icon(
             onPressed: () {
-              handleLogOut();
+              context.read<UserProvider>().handleLogOut();
               logger.i("Logout API Called");
             },
             icon: Icon(Icons.logout, color: iconColor),

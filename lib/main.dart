@@ -1,33 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:logger/logger.dart';
+import 'package:parking_spot_frontend/providers/find_car_provider.dart';
 import 'package:parking_spot_frontend/providers/user_provider.dart';
 import 'package:parking_spot_frontend/screens/login_view.dart';
 import 'package:parking_spot_frontend/widgets/main_widget.dart';
+import 'package:provider/provider.dart';
 
-import 'models/user.dart';
 import 'utility/register_web_webview_stub.dart'
     if (dart.library.html) 'utility/register_web_webview.dart';
-
-var logger = Logger(
-  printer: PrettyPrinter(methodCount: 0, colors: false),
-);
-
-GoogleSignIn _googleSignIn = GoogleSignIn(scopes: <String>[
-  'email',
-]);
-
-Future<void> handleLogIn() async {
-  try {
-    await _googleSignIn.signIn();
-  } catch (error) {
-    logger.e("Login Error: ${error}");
-  }
-}
-
-Future<void> handleLogOut() => _googleSignIn.signOut();
-
-late User user; // user data
 
 void main() {
   registerWebViewWebImplementation();
@@ -42,40 +21,45 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  GoogleSignInAccount? _currentUser;
-
   @override
   void initState() {
     super.initState();
-    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
-      setState(() {
-        _currentUser = account;
-      });
-      if (_currentUser != null) {
-        user = User(_currentUser?.displayName, _currentUser?.email,
-            _currentUser?.id, _currentUser?.photoUrl);
-        UserProvider.postUser(user);
-        logger.i("Login Successed");
-        logger.i("User Info\n${user.toString()}");
-      }
-    });
-    _googleSignIn.signInSilently();
-  }
-
-  Widget _buildBody() {
-    final GoogleSignInAccount? user = _currentUser;
-    if (user != null) {
-      return const MainWidget();
-    } else {
-      return const LoginView();
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: _buildBody(),
-    );
+        debugShowCheckedModeBanner: false,
+        home: MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => UserProvider()),
+            ChangeNotifierProvider(create: (_) => FindCarProvider()),
+            FutureProvider(
+                create: (context) => FindCarProvider().setCarInfo(),
+                initialData: null),
+          ],
+          child: const BuildBody(),
+        ));
+  }
+}
+
+class BuildBody extends StatefulWidget {
+  const BuildBody({Key? key}) : super(key: key);
+
+  @override
+  State<BuildBody> createState() => _BuildBodyState();
+}
+
+class _BuildBodyState extends State<BuildBody> {
+  @override
+  Widget build(BuildContext context) {
+    Widget body;
+    if (context.watch<UserProvider>().user == null) {
+      // if not logined
+      body = const LoginView(); // Login View
+    } else {
+      body = const MainWidget(); // Main View
+    }
+    return body;
   }
 }

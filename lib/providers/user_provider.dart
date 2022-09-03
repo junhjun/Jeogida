@@ -1,23 +1,40 @@
-import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:logger/logger.dart';
+import 'package:parking_spot_frontend/services/user_service.dart';
 
-import 'package:parking_spot_frontend/utility/values.dart';
-import 'package:http/http.dart' as http;
-import '../main.dart';
 import '../models/user.dart';
 
-class UserProvider {
-  static Future<void> postUser(User user) async {
-    http.Response response = await http.post(Uri.parse("${serverAddress}user"),
-        headers: <String, String>{
-          "Content-Type": "application/json",
-        },
-        body: json.encode(user.toJson()));
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      logger.i("User post success");
-    } else if (response.statusCode == 400) {
-      logger.e("User post failed\n${response.body}");
-    } else {
-      logger.e("User post failed\n${response.body}");
+class UserProvider extends ChangeNotifier {
+  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: <String>['email']);
+  var logger = Logger(printer: PrettyPrinter(methodCount: 0, colors: false));
+  GoogleSignInAccount? _currentUser;
+  User? _user;
+
+  GoogleSignInAccount? get currentUser => _currentUser;
+  User? get user => _user;
+
+  Future<void> handleLogIn() async {
+    try {
+      await _googleSignIn.signIn();
+      logger.i("Login Successed");
+      _currentUser = _googleSignIn.currentUser;
+      _user = User(_currentUser?.displayName, _currentUser?.email,
+          _currentUser?.id, _currentUser?.photoUrl);
+      UserService.postUser(_user!);
+      logger.d("User Info\n${_user.toString()}");
+      _googleSignIn.signInSilently();
+      notifyListeners();
+    } catch (error) {
+      logger.e(error);
     }
+  }
+
+  Future<void> handleLogOut() async {
+    _googleSignIn.signOut();
+    _user = null;
+    _currentUser = null;
+    logger.i("Logout Successed");
+    notifyListeners();
   }
 }

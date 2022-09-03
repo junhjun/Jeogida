@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:parking_spot_frontend/models/book_mark_space.dart';
 import 'package:parking_spot_frontend/screens/webview_zoom_view.dart';
 import 'package:parking_spot_frontend/widgets/book_mark_space_dropdown.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../main.dart';
 import '../widgets/web_view_widget.dart';
 
 late BookMarkSpace? selectedSpace;
@@ -32,9 +34,15 @@ class _MyAppState extends State<FindSpace> {
   final _activeTextStyle =
       TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold);
   List<bool> selected = List.generate(3, (index) => false);
+  var logger = Logger(printer: PrettyPrinter(methodCount: 0, colors: false));
 
   @override
   Widget build(BuildContext context) {
+    @override
+    void initState() {
+      super.initState();
+    }
+
     return Container(
       margin: EdgeInsets.all(30),
       decoration: BoxDecoration(
@@ -155,7 +163,10 @@ class _MyAppState extends State<FindSpace> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => WebViewZoomView()),
+                    MaterialPageRoute(
+                        builder: (context) => WebViewZoomView(
+                              mapId: 5,
+                            )),
                   );
                 },
                 child: const Text("여기를 클릭하면 확대해서 볼 수 있습니다."),

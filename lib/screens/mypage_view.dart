@@ -25,44 +25,65 @@ class _MyPageViewState extends State<MyPageView> {
   @override
   Widget build(BuildContext context) {
     // logger.i(context.watch<UserProvider>().user);
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 50),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: CircleAvatar(
-              radius: MediaQuery.of(context).size.width * 0.1,
-              backgroundImage:
-                  NetworkImage(context.watch<UserProvider>().user!.photoUrl!),
+    return Scaffold(
+      backgroundColor: Color(0xffededed),
+      // padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 50),
+      body: Container(
+        height: MediaQuery.of(context).size.height * 0.35,
+        margin: EdgeInsets.all(30),
+        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Center(
+              child: CircleAvatar(
+                radius: MediaQuery.of(context).size.width * 0.1,
+                backgroundImage:
+                    NetworkImage(context.watch<UserProvider>().user!.photoUrl!),
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          Center(
-            child: Container(
-              padding: const EdgeInsets.only(bottom: 20.0),
-              child: Text(context.watch<UserProvider>().user!.displayName!,
-                  style: nameTextStyle),
+            // const SizedBox(height: 20),
+            Center(
+              child: Container(
+                padding: const EdgeInsets.only(bottom: 15.0),
+                child: Text(context.watch<UserProvider>().user!.displayName!,
+                    style: nameTextStyle),
+              ),
             ),
-          ),
-          Row(
-            children: [
-              Icon(Icons.email, color: iconColor),
-              Text(" ${context.watch<UserProvider>().user!.email!}",
-                  style: infoTextStyle)
-            ],
-          ),
-          TextButton.icon(
-            onPressed: () {
-              context.read<UserProvider>().handleLogOut();
-              logger.i("Logout API Called");
-            },
-            icon: Icon(Icons.logout, color: iconColor),
-            label: Text("로그아웃", style: infoTextStyle),
-            style: buttonStyle,
-          ),
-        ],
+            Container(
+              margin: EdgeInsets.fromLTRB(35, 10, 20, 0),
+              // decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.email, color: iconColor),
+                      Text(" ${context.watch<UserProvider>().user!.email!}",
+                          style: infoTextStyle)
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      TextButton.icon(
+                        onPressed: () {
+                          context.read<UserProvider>().handleLogOut();
+                          logger.i("Logout API Called");
+                        },
+                        icon: Icon(Icons.logout, color: iconColor),
+                        label: Text("로그아웃", style: infoTextStyle),
+                        style: buttonStyle,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+          ],
+        ),
       ),
     );
   }

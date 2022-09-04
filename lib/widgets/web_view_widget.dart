@@ -85,7 +85,7 @@ class WebViewControls extends StatelessWidget {
               logger.i("refresh webview");
               controller.reload();
             },
-            icon: const Icon(Icons.replay));
+            icon: const Icon(Icons.replay_circle_filled_rounded, size: 25, color: Colors.grey));
       },
     );
   }

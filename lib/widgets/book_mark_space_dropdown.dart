@@ -13,7 +13,7 @@ class BookMarkSpaceWidget extends StatefulWidget {
 }
 
 class _BookMarkSpaceWidgetState extends State<BookMarkSpaceWidget> {
-  final _dropdownTextStyle = const TextStyle(fontSize: 13, color: Colors.black);
+  final _dropdownTextStyle = const TextStyle(fontSize: 15, color: Colors.black);
   final _dropdownIcon = const Icon(Icons.arrow_drop_down, size: 30);
   late Future<BookMarkSpaceList> bookMarkModel; // BookMarkData
 
@@ -31,21 +31,27 @@ class _BookMarkSpaceWidgetState extends State<BookMarkSpaceWidget> {
         builder:
             (BuildContext context, AsyncSnapshot<BookMarkSpaceList> snapshot) {
           if (snapshot.hasData) {
-            return DropdownButton(
-                hint: Text("주차장을 선택하세요"),
-                value: selectedSpace,
-                items: (snapshot.data!.spaces as List<BookMarkSpace>)
-                    .map((e) => DropdownMenuItem(
-                        child: Text("위치 | " + e.name), value: e))
-                    .toList(),
-                onChanged: (BookMarkSpace? value) {
-                  setState(() {
-                    selectedSpace = value;
-                  });
-                },
-                style: _dropdownTextStyle,
-                icon: _dropdownIcon,
-                iconEnabledColor: Colors.grey);
+            return Container(
+              decoration: BoxDecoration(border: Border.all(color: Color(0xffededed)), borderRadius: BorderRadius.circular(5)),
+              padding: EdgeInsets.fromLTRB(15, 0, 10, 0),
+              child: DropdownButton(
+                  hint: Text("주차장을 선택하세요"),
+                  value: selectedSpace,
+                  items: (snapshot.data!.spaces as List<BookMarkSpace>)
+                      .map((e) => DropdownMenuItem(
+                          child: Text("위치  |  " + e.name), value: e))
+                      .toList(),
+                  onChanged: (BookMarkSpace? value) {
+                    setState(() {
+                      selectedSpace = value;
+                    });
+                  },
+                  underline: Container(),
+                  isExpanded: true,
+                  style: _dropdownTextStyle,
+                  icon: _dropdownIcon,
+                  iconEnabledColor: Colors.grey),
+            );
           } else if (snapshot.hasError) {
             return Text("error : ${snapshot.error}"); // Error
           } else {

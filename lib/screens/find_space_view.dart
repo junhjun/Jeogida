@@ -22,7 +22,9 @@ class _MyAppState extends State<FindSpace> {
 
   final _valueList = ['개봉현대아파트', '스타필드코엑스몰', '아파트2', '아파트3'];
   var _selectedValue = '개봉현대아파트';
-  final _iconTextStye = TextStyle(color: Colors.grey, fontSize: 12);
+
+
+  final _infoTextStyle = TextStyle(color: Colors.grey, fontSize: 13);
   final _disabledButtonStyle = ElevatedButton.styleFrom(
       shape: const CircleBorder(),
       primary: Colors.grey[300],
@@ -43,29 +45,22 @@ class _MyAppState extends State<FindSpace> {
       super.initState();
     }
 
-    return Container(
-      margin: EdgeInsets.all(30),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.all(Radius.circular(8.0))),
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: Colors.grey),
-            boxShadow: [
-              BoxShadow(color: Colors.grey, blurRadius: 5, offset: Offset(4, 8))
-            ],
-            borderRadius: BorderRadius.all(Radius.circular(8.0))),
-        padding: EdgeInsets.all(20),
+    return Scaffold(
+      backgroundColor: Color(0xffededed),
+      body: Container(
+        margin: const EdgeInsets.fromLTRB(25, 35, 25, 35),
+        decoration: BoxDecoration(color: Colors.white, borderRadius: const BorderRadius.all(Radius.circular(10))),
+        padding: const EdgeInsets.fromLTRB(23, 30, 23, 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // DropDownButton
-            Container(child: BookMarkSpaceWidget()),
+            const BookMarkSpaceWidget(),
+
             // Parking lot Elevated Button
             Container(
-              padding: EdgeInsets.only(bottom: 20),
+              padding: EdgeInsets.only(bottom: 15),
               child: ToggleButtons(
                 borderColor: Colors.white,
                 borderRadius: BorderRadius.circular(10.0),
@@ -116,42 +111,46 @@ class _MyAppState extends State<FindSpace> {
                 isSelected: selected,
               ),
             ), // TODO - OnPressed Method
+
+
             // Divider
             Container(
-                padding: EdgeInsets.only(bottom: 20),
-                child: Divider(color: Colors.grey, height: 5)),
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 15),
+              child: const Divider(thickness: 0.3, color: Colors.grey)),
+
+
+
             // Icons
-            Container(
-                child: Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  padding: EdgeInsets.only(bottom: 10),
                   child: Row(
                     children: [
-                      TextButton.icon(
-                        onPressed: null,
-                        icon: Icon(Icons.rectangle,
-                            size: 14, color: Colors.green),
-                        label: Text("주차 가능", style: _iconTextStye),
-                      ),
-                      TextButton.icon(
-                        onPressed: null,
-                        icon: Icon(Icons.rectangle,
-                            size: 14, color: Colors.yellow),
-                        label: Text("장애인 구역", style: _iconTextStye),
-                      ),
-                      TextButton.icon(
-                          onPressed: null,
-                          icon: Icon(Icons.rectangle,
-                              size: 14, color: Colors.grey),
-                          label: Text("주차 불가", style: _iconTextStye)),
-                      Container(child: WebViewControls(controller: controller)),
-                    ],
+                      const Icon(Icons.square,
+                          size: 9,
+                          color: Color(0xffe3e3e3)),
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(5, 0, 13, 0),
+                        child: Text('주차 가능', style: _infoTextStyle)),
+                      const Icon(Icons.square,
+                          size: 9,
+                          color: Color(0xffafaeae)), // 주차 위치 아이콘
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(5, 0, 13, 0),
+                        child: Text('장애인 구역', style: _infoTextStyle)),
+                      const Icon(Icons.square,
+                          size: 9,
+                          color: Color(0xffee162e)), // 주차 위치 아이콘
+                      Container(
+                          padding: const EdgeInsets.fromLTRB(5, 0, 3, 0),
+                          child: Text('주차 불가', style: _infoTextStyle)),
+                      WebViewControls(controller: controller),
+                    ]
                   ),
                 ),
               ],
-            )),
+            ),
             // WebView
             Flexible(
                 fit: FlexFit.tight,

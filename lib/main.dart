@@ -54,7 +54,8 @@ class _BuildBodyState extends State<BuildBody> {
   @override
   Widget build(BuildContext context) {
     Widget body;
-    if (context.watch<UserProvider>().user == null) {
+    if (context.watch<UserProvider>().user == null ||
+        context.watch<UserProvider>().user!.id == null) {
       // if not logined
       body = const LoginView(); // Login View
     } else {

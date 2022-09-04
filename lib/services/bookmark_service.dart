@@ -1,13 +1,7 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
-import 'package:logger/logger.dart';
-import 'package:parking_spot_frontend/main.dart';
-import 'package:parking_spot_frontend/models/user.dart';
-
 import '../models/book_mark_car_list.dart';
 import '../models/book_mark_space_list.dart';
-import '../models/car_info.dart';
 import '../utility/values.dart';
 
 class BookMarkService {

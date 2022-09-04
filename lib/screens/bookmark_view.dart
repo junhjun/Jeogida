@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:flutter/cupertino.dart';
+
+
 class BookMarkView extends StatefulWidget {
   const BookMarkView({Key? key}) : super(key: key);
 
@@ -621,57 +624,64 @@ class DialogaddCar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      buttonPadding: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      title: Center(
+          child: Text('차량 추가', style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w600))),
       content: Container(
-        width: MediaQuery.of(context).size.width * 0.5,
-        height: MediaQuery.of(context).size.height * 0.4,
-        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+        // decoration: BoxDecoration(border: Border.all(color: Colors.red)),
+        width: MediaQuery.of(context).size.width * 0.2,
+        height: MediaQuery.of(context).size.height * 0.25,
+        // padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                  margin: EdgeInsets.fromLTRB(0, 10, 0, 30),
-                  child: Text('차량 추가', style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w600))),
-
-              Container(
-                height: 100,
+                width: MediaQuery.of(context).size.width * 0.6,
+                height: 75,
                 margin: EdgeInsets.fromLTRB(0, 10, 0, 30),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('자동차 이름', style: TextStyle(fontSize: 17, color: Colors.black, fontWeight: FontWeight.w500)),
+                    Text('자동차 이름', style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w500)),
                     TextField(
                       cursorColor: Colors.grey,
                       style: TextStyle(fontSize: 15, color: Colors.black, fontWeight: FontWeight.w300),
                       controller: inputData1,
                       decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Color(0xffededed),
-                          border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.circular(5)),
-                          hintText: '자동차 이름'),
+                          // filled: true,
+                          // fillColor: Color(0xffededed),
+                          // border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+                          focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.cyan)),
+                          hintText: '자동차 이름',
+                          hintStyle: TextStyle(fontSize: 14, color: Colors.grey)),
                     ),
                   ],
                 ),
               ),
+
               Container(
-                height: 100,
-                margin: EdgeInsets.fromLTRB(0, 10, 0, 20),
+                width: MediaQuery.of(context).size.width * 0.6,
+                height: 75,
+                margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('차량 번호', style: TextStyle(fontSize: 17, color: Colors.black, fontWeight: FontWeight.w500)),
+                    Text('차량 번호', style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w500)),
                     TextField(
                       cursorColor: Colors.grey,
                       style: TextStyle(fontSize: 15, color: Colors.black, fontWeight: FontWeight.w300),
                       controller: inputData2,
                       decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Color(0xffededed),
-                          border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.circular(5)),
-                          hintText: '차량 번호'),
+                          // filled: true,
+                          // fillColor: Color(0xffededed),
+                          // border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+                          focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.cyan)),
+                          hintText: '차량 번호',
+                          hintStyle: TextStyle(fontSize: 14, color: Colors.grey)),
                     ),
                   ],
                 ),
@@ -682,11 +692,11 @@ class DialogaddCar extends StatelessWidget {
       ),
       actions: [
         Container(
-          margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
-          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(bottomRight: Radius.circular(10), bottomLeft: Radius.circular(10)), color: Colors.cyan),
           child: SizedBox(
-            width: 212,
-            height: 50,
+            width: MediaQuery.of(context).size.width,
+            // height: 50,
             child: TextButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
@@ -711,10 +721,12 @@ class DialogaddCar extends StatelessWidget {
                       builder: (context) => BookMarkView()))
                       .whenComplete(addCheck1);
                 },
-                child: Text('차량 추가', style: TextStyle(fontSize: 19, color: Colors.white, fontWeight: FontWeight.w500))),
+                child: Container(
+                    child: Text('차량 추가', style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.w500)))),
           ),
         )
       ],
+
     );
   }
 }
@@ -736,7 +748,7 @@ class _DialogaddSpotState extends State<DialogaddSpot> {
 
   @override
   void initState() {
-    _valueList = ['아직 미완성', '주차장 데이터', '불러와야 함'];
+    _valueList = ['차량1', '차량2', '차량3', '차량4'];
     _selectedValue = _valueList[0];
     super.initState();
   }
@@ -744,18 +756,19 @@ class _DialogaddSpotState extends State<DialogaddSpot> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      buttonPadding: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      title: Center(
+          child: Text('주차장 추가', style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w600))),
       content: Container(
-        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+        width: MediaQuery.of(context).size.width * 0.2,
+        height: MediaQuery.of(context).size.height * 0.12,
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                  margin: EdgeInsets.fromLTRB(0, 10, 0, 30),
-                  child: Text('주차장 추가', style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w600))),
-
-              Container(
+                // width: MediaQuery.of(context).size.width * 0.6,
                 height: 90,
                 margin: EdgeInsets.fromLTRB(0, 10, 0, 5),
                 child: Column(
@@ -799,11 +812,11 @@ class _DialogaddSpotState extends State<DialogaddSpot> {
       ),
       actions: [
         Container(
-          margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(bottomRight: Radius.circular(10), bottomLeft: Radius.circular(10)), color: Colors.cyan),
           alignment: Alignment.center,
           child: SizedBox(
-            width: 212,
-            height: 50,
+            width: MediaQuery.of(context).size.width,
             child: TextButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
@@ -822,7 +835,7 @@ class _DialogaddSpotState extends State<DialogaddSpot> {
                   }
                   Navigator.pop(context);
                 },
-                child: Text('주차장 추가', style: TextStyle(fontSize: 19, color: Colors.white, fontWeight: FontWeight.w500))),
+                child: Text('주차장 추가', style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.w500))),
           ),
         )
       ],

@@ -16,33 +16,40 @@ class LoginView extends StatelessWidget {
     var logger = Logger(printer: PrettyPrinter(methodCount: 0, colors: false));
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Center(child: Image(image: AssetImage("assets/logo.png"))),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  height: MediaQuery.of(context).size.height * 0.05,
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      logger.i("Login API Called");
-                      context.read<UserProvider>().handleLogIn();
-                    },
-                    icon: const Image(
-                        image: AssetImage("assets/google.png"),
-                        width: 20,
-                        height: 20),
-                    label: const Text("구글로 계속하기", style: textStyle),
-                    style: buttonStyle,
-                  ),
+        body: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Center(
+                  child: Image(
+                image: AssetImage("assets/logo.png"),
+              )),
+              const Text("저기다",
+                  style: TextStyle(
+                      color: Color(0xFF23CCD3),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 50)),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height * 0.05,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    logger.i("Login API Called");
+                    context.read<UserProvider>().handleLogIn();
+                  },
+                  icon: const Image(
+                      image: AssetImage("assets/google.png"),
+                      width: 20,
+                      height: 20),
+                  label: const Text("구글로 계속하기", style: textStyle),
+                  style: buttonStyle,
                 ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );

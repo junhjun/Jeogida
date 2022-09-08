@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:parking_spot_frontend/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:restart_app/restart_app.dart';
 
 class MyPageView extends StatefulWidget {
   const MyPageView({Key? key}) : super(key: key);
@@ -33,8 +34,7 @@ class _MyPageViewState extends State<MyPageView> {
         margin: EdgeInsets.all(30),
         padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10)),
+            color: Colors.white, borderRadius: BorderRadius.circular(10)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -71,6 +71,7 @@ class _MyPageViewState extends State<MyPageView> {
                         onPressed: () {
                           context.read<UserProvider>().handleLogOut();
                           logger.i("Logout API Called");
+                          Restart.restartApp(); // restart
                         },
                         icon: Icon(Icons.logout, color: iconColor),
                         label: Text("로그아웃", style: infoTextStyle),
@@ -81,7 +82,6 @@ class _MyPageViewState extends State<MyPageView> {
                 ],
               ),
             ),
-
           ],
         ),
       ),

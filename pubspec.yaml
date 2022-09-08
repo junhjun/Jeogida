@@ -42,6 +42,7 @@ dependencies:
   webview_flutter: ^3.0.2
   webview_flutter_web: ^0.1.0+4
   google_sign_in: ^5.4.1
+  restart_app: ^1.1.0
 
 
 dev_dependencies:

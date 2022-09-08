@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:parking_spot_frontend/providers/find_car_provider.dart';
+import 'package:parking_spot_frontend/providers/user_provider.dart';
 import 'package:parking_spot_frontend/screens/find_car_view.dart';
 import 'package:provider/provider.dart';
 
@@ -22,12 +23,12 @@ class _BookMarkCarWidgetState extends State<BookMarkCarWidget> {
   final _dropdownTextStyle = const TextStyle(fontSize: 15, color: Colors.black);
   final _dropdownIcon = const Icon(Icons.arrow_drop_down, size: 30);
   late Future<BookMarkCarList> bookMarkModel; // BookMarkData
-  String _userid = "7"; // temp user id
 
   @override
   void initState() {
     super.initState();
-    bookMarkModel = BookMarkService.getBookmarkCarList(_userid);
+    bookMarkModel = BookMarkService.getBookmarkCarList(
+        context.read<UserProvider>().user!.id!);
   }
 
   @override
@@ -38,7 +39,9 @@ class _BookMarkCarWidgetState extends State<BookMarkCarWidget> {
             (BuildContext context, AsyncSnapshot<BookMarkCarList> snapshot) {
           if (snapshot.hasData) {
             return Container(
-              decoration: BoxDecoration(border: Border.all(color: Color(0xffededed)), borderRadius: BorderRadius.circular(5)),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Color(0xffededed)),
+                  borderRadius: BorderRadius.circular(5)),
               padding: EdgeInsets.fromLTRB(15, 0, 10, 0),
               child: DropdownButton(
                   hint: const Text("차량을 선택하세요"),

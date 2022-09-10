@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:logger/logger.dart';
 import 'package:parking_spot_frontend/utility/values.dart';
 import 'package:http/http.dart' as http;
-import '../main.dart';
 import '../models/user.dart';
 
 class UserService {

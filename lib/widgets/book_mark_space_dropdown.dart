@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:parking_spot_frontend/models/book_mark_space.dart';
+import 'package:parking_spot_frontend/providers/find_space_provider.dart';
+import 'package:parking_spot_frontend/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../models/book_mark_space_list.dart';
 import '../services/bookmark_service.dart';
-import '../screens/find_space_view.dart';
 
 class BookMarkSpaceWidget extends StatefulWidget {
   const BookMarkSpaceWidget({Key? key}) : super(key: key);
@@ -13,6 +16,7 @@ class BookMarkSpaceWidget extends StatefulWidget {
 }
 
 class _BookMarkSpaceWidgetState extends State<BookMarkSpaceWidget> {
+  var logger = Logger(printer: PrettyPrinter(methodCount: 0, colors: false));
   final _dropdownTextStyle = const TextStyle(fontSize: 15, color: Colors.black);
   final _dropdownIcon = const Icon(Icons.arrow_drop_down, size: 30);
   late Future<BookMarkSpaceList> bookMarkModel; // BookMarkData
@@ -20,8 +24,8 @@ class _BookMarkSpaceWidgetState extends State<BookMarkSpaceWidget> {
   @override
   void initState() {
     super.initState();
-    bookMarkModel = BookMarkService.getBookmarkSpaceList();
-    selectedSpace = null;
+    bookMarkModel = BookMarkService.getBookmarkSpaceList(
+        context.read<UserProvider>().user!.id!);
   }
 
   @override
@@ -32,18 +36,21 @@ class _BookMarkSpaceWidgetState extends State<BookMarkSpaceWidget> {
             (BuildContext context, AsyncSnapshot<BookMarkSpaceList> snapshot) {
           if (snapshot.hasData) {
             return Container(
-              decoration: BoxDecoration(border: Border.all(color: Color(0xffededed)), borderRadius: BorderRadius.circular(5)),
-              padding: EdgeInsets.fromLTRB(15, 0, 10, 0),
+              decoration: BoxDecoration(
+                  border: Border.all(color: const Color(0xffededed)),
+                  borderRadius: BorderRadius.circular(5)),
+              padding: const EdgeInsets.fromLTRB(15, 0, 10, 0),
               child: DropdownButton(
-                  hint: Text("주차장을 선택하세요"),
-                  value: selectedSpace,
-                  items: (snapshot.data!.spaces as List<BookMarkSpace>)
+                  hint: const Text("주차장을 선택하세요"),
+                  value: context.watch<FindSpaceProvider>().selectedLocation,
+                  items: snapshot.data!.spaces
                       .map((e) => DropdownMenuItem(
-                          child: Text("위치  |  " + e.name), value: e))
+                          value: e, child: Text("위치  |  ${e.name}")))
                       .toList(),
                   onChanged: (BookMarkSpace? value) {
                     setState(() {
-                      selectedSpace = value;
+                      context.read<FindSpaceProvider>().setLocation(value!);
+                      context.read<FindSpaceProvider>().setSpaceInfo();
                     });
                   },
                   underline: Container(),
@@ -53,7 +60,8 @@ class _BookMarkSpaceWidgetState extends State<BookMarkSpaceWidget> {
                   iconEnabledColor: Colors.grey),
             );
           } else if (snapshot.hasError) {
-            return Text("error : ${snapshot.error}"); // Error
+            logger.e("error : ${snapshot.error}");
+            return const Text("error"); // Error
           } else {
             return const CircularProgressIndicator();
           }

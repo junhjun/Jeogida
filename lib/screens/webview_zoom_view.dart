@@ -2,16 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:parking_spot_frontend/screens/find_car_view.dart';
-import 'package:parking_spot_frontend/widgets/web_view_widget.dart';
-import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../providers/find_car_provider.dart';
-
 class WebViewZoomView extends StatefulWidget {
-  int? mapId;
   WebViewZoomView({required this.mapId, Key? key}) : super(key: key);
+  int? mapId;
 
   @override
   State<WebViewZoomView> createState() => _WebViewZoomViewState();

@@ -23,23 +23,22 @@ class _CarInfoState extends State<CarInfoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final findCarProvider = Provider.of<FindCarProvider>(context, listen: true);
-    DateTime dt = (findCarProvider.carInfo != null &&
-            findCarProvider.carInfo?.parkingInfoChangedAt != null)
-        ? DateTime.parse(findCarProvider.carInfo!.parkingInfoChangedAt!)
+    var carInfo = context.watch<FindCarProvider>().carInfo;
+    DateTime dt = (carInfo != null && carInfo.parkingInfoChangedAt != null)
+        ? DateTime.parse(carInfo.parkingInfoChangedAt!)
         : DateTime.now();
     DateTime now = DateTime.now();
     Duration duration = now.difference(dt);
-    var floor = findCarProvider.carInfo?.parkingLotName ?? 0;
-    var number = findCarProvider.carInfo?.parkingInfoNumber ?? 0;
-    var location = findCarProvider.carInfo?.locationName ?? "차량을 선택하세요";
+    var floor = carInfo?.parkingLotName ?? 0;
+    var number = carInfo?.parkingInfoNumber ?? 0;
+    var location = carInfo?.locationName ?? "차량을 선택하세요";
     logger.d("CarInfo\n"
         "위치 : $location $floor층 $number번\n"
         "주차 시간 : ${duration.inMinutes ~/ 60} 시간 ${duration.inMinutes % 60} 분\n"
-        "mapId : ${findCarProvider.carInfo?.mapId}");
+        "mapId : ${carInfo?.mapId}");
 
     return Container(
-      padding: EdgeInsets.fromLTRB(4, 25, 4, 5),
+      padding: const EdgeInsets.fromLTRB(4, 25, 4, 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -49,7 +48,8 @@ class _CarInfoState extends State<CarInfoWidget> {
                 Text("$floor층 $number번", style: _currentAreaTextStyle), // 주차 구역
           ),
           Text("- 위치 : $location", style: _infoTextStyle), // 주차장 위치
-          Text("- 주차시간 : ${duration.inMinutes ~/ 60}시간 ${duration.inMinutes % 60}분",
+          Text(
+              "- 주차시간 : ${duration.inMinutes ~/ 60}시간 ${duration.inMinutes % 60}분",
               style: _infoTextStyle),
           // Divider
           Container(

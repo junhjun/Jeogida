@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:parking_spot_frontend/providers/find_car_provider.dart';
 import 'package:parking_spot_frontend/providers/user_provider.dart';
-import 'package:parking_spot_frontend/screens/find_car_view.dart';
 import 'package:provider/provider.dart';
 
-import '../main.dart';
 import '../models/book_mark_car.dart';
 import '../models/book_mark_car_list.dart';
 import '../services/bookmark_service.dart';
@@ -40,9 +38,9 @@ class _BookMarkCarWidgetState extends State<BookMarkCarWidget> {
           if (snapshot.hasData) {
             return Container(
               decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xffededed)),
+                  border: Border.all(color: const Color(0xffededed)),
                   borderRadius: BorderRadius.circular(5)),
-              padding: EdgeInsets.fromLTRB(15, 0, 10, 0),
+              padding: const EdgeInsets.fromLTRB(15, 0, 10, 0),
               child: DropdownButton(
                   hint: const Text("차량을 선택하세요"),
                   value: context.watch<FindCarProvider>().selectedCar,

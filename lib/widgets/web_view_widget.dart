@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:parking_spot_frontend/providers/find_car_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewStack extends StatefulWidget {
@@ -60,32 +58,38 @@ class _WebViewStackState extends State<WebViewStack> {
 }
 
 class WebViewControls extends StatelessWidget {
-  WebViewControls({required this.controller, Key? key}) : super(key: key);
+  WebViewControls({required this.controller, required this.mapId, Key? key})
+      : super(key: key);
 
   final Completer<WebViewController> controller;
   var logger = Logger(printer: PrettyPrinter(methodCount: 0, colors: false));
+  int? mapId;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<WebViewController>(
       future: controller.future,
       builder: (context, snapshot) {
-        final WebViewController? controller = snapshot.data;
-        if (context.watch<FindCarProvider>().carInfo?.mapId != null) {
-          controller!.loadUrl(
-              // "http://ec2-3-37-217-255.ap-northeast-2.compute.amazonaws.com:8081/${context.watch<FindCarProvider>().carInfo?.mapId}"
-              "http://ec2-3-37-217-255.ap-northeast-2.compute.amazonaws.com:8081/5");
-        }
-        if (snapshot.connectionState != ConnectionState.done ||
-            controller == null) {
+        if (snapshot.hasData) {
+          final WebViewController? controller = snapshot.data;
+          if (mapId != null) {
+            controller!.loadUrl(
+                // "http://ec2-3-37-217-255.ap-northeast-2.compute.amazonaws.com:8081/${context.watch<FindCarProvider>().carInfo?.mapId}"
+                "http://ec2-3-37-217-255.ap-northeast-2.compute.amazonaws.com:8081/5");
+          }
+          return IconButton(
+              onPressed: () async {
+                logger.i("refresh webview");
+                controller!.reload();
+              },
+              icon: const Icon(Icons.replay_circle_filled_rounded,
+                  size: 25, color: Colors.grey));
+        } else if (snapshot.hasError) {
+          logger.e("error : ${snapshot.error}");
           return const Icon(Icons.replay);
+        } else {
+          return const CircularProgressIndicator();
         }
-        return IconButton(
-            onPressed: () async {
-              logger.i("refresh webview");
-              controller.reload();
-            },
-            icon: const Icon(Icons.replay_circle_filled_rounded, size: 25, color: Colors.grey));
       },
     );
   }

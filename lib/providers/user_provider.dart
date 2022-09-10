@@ -32,9 +32,13 @@ class UserProvider extends ChangeNotifier {
 
   Future<void> handleLogOut() async {
     _googleSignIn.signOut();
-    _user = null;
-    _currentUser = null;
     logger.i("Logout Successed");
     notifyListeners();
+  }
+
+  void clear() {
+    _currentUser = null;
+    _user = null;
+    _currentUser = null;
   }
 }

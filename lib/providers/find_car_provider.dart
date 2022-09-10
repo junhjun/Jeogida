@@ -16,7 +16,7 @@ class FindCarProvider extends ChangeNotifier {
 
   void setSelectedCar(BookMarkCar? selectedCar) {
     _selectedCar = selectedCar;
-    logger.d("selectedCar : ${_selectedCar!.number}");
+    logger.d("selectedCar : ${_selectedCar?.number}");
     notifyListeners();
   }
 
@@ -25,5 +25,10 @@ class FindCarProvider extends ChangeNotifier {
       _carInfo = await CarInfoService.getCarInfo(_selectedCar!.id);
       notifyListeners();
     }
+  }
+
+  void clear() {
+    _selectedCar = null;
+    _carInfo = null;
   }
 }

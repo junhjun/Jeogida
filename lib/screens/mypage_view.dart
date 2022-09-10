@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:parking_spot_frontend/providers/find_car_provider.dart';
+import 'package:parking_spot_frontend/providers/find_space_provider.dart';
 import 'package:parking_spot_frontend/providers/user_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:restart_app/restart_app.dart';
 
 class MyPageView extends StatefulWidget {
   const MyPageView({Key? key}) : super(key: key);
@@ -27,12 +28,12 @@ class _MyPageViewState extends State<MyPageView> {
   Widget build(BuildContext context) {
     // logger.i(context.watch<UserProvider>().user);
     return Scaffold(
-      backgroundColor: Color(0xffededed),
+      backgroundColor: const Color(0xffededed),
       // padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 50),
       body: Container(
         height: MediaQuery.of(context).size.height * 0.35,
-        margin: EdgeInsets.all(30),
-        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+        margin: const EdgeInsets.all(30),
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(10)),
         child: Column(
@@ -54,7 +55,7 @@ class _MyPageViewState extends State<MyPageView> {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(35, 10, 20, 0),
+              margin: const EdgeInsets.fromLTRB(35, 10, 20, 0),
               // decoration: BoxDecoration(border: Border.all(color: Colors.black)),
               child: Column(
                 children: [
@@ -69,9 +70,11 @@ class _MyPageViewState extends State<MyPageView> {
                     children: [
                       TextButton.icon(
                         onPressed: () {
+                          context.read<FindSpaceProvider>().clear();
+                          context.read<FindCarProvider>().clear();
                           context.read<UserProvider>().handleLogOut();
+                          context.read<UserProvider>().clear();
                           logger.i("Logout API Called");
-                          Restart.restartApp(); // restart
                         },
                         icon: Icon(Icons.logout, color: iconColor),
                         label: Text("로그아웃", style: infoTextStyle),

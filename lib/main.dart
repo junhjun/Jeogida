@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:parking_spot_frontend/providers/find_car_provider.dart';
 import 'package:parking_spot_frontend/providers/find_space_provider.dart';
 import 'package:parking_spot_frontend/providers/user_provider.dart';
+import 'package:parking_spot_frontend/providers/book_mark_provider.dart';
 import 'package:parking_spot_frontend/screens/login_view.dart';
 import 'package:parking_spot_frontend/widgets/main_widget.dart';
 import 'package:provider/provider.dart';
@@ -36,6 +37,7 @@ class _MyAppState extends State<MyApp> {
             ChangeNotifierProvider(create: (_) => UserProvider()),
             ChangeNotifierProvider(create: (_) => FindCarProvider()),
             ChangeNotifierProvider(create: (_) => FindSpaceProvider()),
+            ChangeNotifierProvider(create: (_) => BookMarkProvider()),
             FutureProvider(
                 create: (context) => FindCarProvider().setCarInfo(),
                 initialData: null),

@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:parking_spot_frontend/models/book_mark_space.dart';
+import 'package:parking_spot_frontend/models/book_mark_space_list.dart';
+import 'package:parking_spot_frontend/services/bookmark_service.dart';
 import 'package:parking_spot_frontend/services/spaceinfo_service.dart';
 
 import '../models/space_info.dart';
 
 class FindSpaceProvider extends ChangeNotifier {
   final logger = Logger(printer: PrettyPrinter(methodCount: 0, colors: false));
+  BookMarkSpaceList? _bookMarkSpaceList;
   BookMarkSpace? _selectedLocation;
   SpaceInfo? _spaceInfo;
   int? _selectedIdx;
 
+  BookMarkSpaceList? get bookMarkSpaceList => _bookMarkSpaceList;
   BookMarkSpace? get selectedLocation => _selectedLocation;
   SpaceInfo? get spaceInfo => _spaceInfo;
   int? get selectedIdx => _selectedIdx;
@@ -41,5 +45,12 @@ class FindSpaceProvider extends ChangeNotifier {
     _selectedIdx = null;
     _selectedLocation = null;
     _spaceInfo = null;
+  }
+
+  void setBookMarkSpaceList(String? userCode) async {
+    if (userCode != null) {
+      _bookMarkSpaceList = await BookMarkService.getBookmarkSpaceList(userCode);
+      notifyListeners();
+    }
   }
 }

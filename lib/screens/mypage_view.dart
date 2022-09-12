@@ -33,8 +33,8 @@ class _MyPageViewState extends State<MyPageView> {
       body: Center(
         child: Container(
           height: MediaQuery.of(context).size.height * 0.35,
-          margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
-          padding: EdgeInsets.fromLTRB(0, 13, 0, 0),
+          margin: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+          padding: const EdgeInsets.fromLTRB(0, 13, 0, 0),
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(15)),
           child: Column(
@@ -43,8 +43,8 @@ class _MyPageViewState extends State<MyPageView> {
               Center(
                 child: CircleAvatar(
                   radius: MediaQuery.of(context).size.width * 0.1,
-                  backgroundImage:
-                      NetworkImage(context.watch<UserProvider>().user!.photoUrl!),
+                  backgroundImage: NetworkImage(
+                      context.watch<UserProvider>().user!.photoUrl!),
                 ),
               ),
               // const SizedBox(height: 20),
@@ -56,7 +56,7 @@ class _MyPageViewState extends State<MyPageView> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.fromLTRB(40, 10, 20, 0),
+                margin: const EdgeInsets.fromLTRB(40, 10, 20, 0),
                 child: Column(
                   children: [
                     Row(

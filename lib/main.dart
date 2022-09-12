@@ -66,6 +66,12 @@ class _BuildBodyState extends State<BuildBody> {
       // if not logined
       body = const LoginView(); // Login View
     } else {
+      context
+          .read<FindCarProvider>()
+          .setBookMarkCarList(context.watch<UserProvider>().user!.id);
+      context
+          .read<FindSpaceProvider>()
+          .setBookMarkSpaceList(context.watch<UserProvider>().user!.id);
       body = const MainWidget(); // Main View
     }
     return body;

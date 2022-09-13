@@ -168,13 +168,12 @@ class _BookMarkViewState extends State<BookMarkView> {
                                 builder: (context) {
                                   return DialogaddCar(userCode : Code);
                                 });
-                            // 여기가 문제
-                            Navigator.push(context, MaterialPageRoute(
-                                builder: (BuildContext context) => ChangeNotifierProvider(
-                                  create: (context) => UserProvider(),
-                                  // child: MyApp()
-                                  child: BookMarkView(),
-                                    )));
+                            // Navigator.push(context, MaterialPageRoute(
+                            //     builder: (BuildContext context) => ChangeNotifierProvider(
+                            //       create: (context) => UserProvider(),
+                            //       // child: MyApp()
+                            //       child: BookMarkView(),
+                            //         )));
                           },
                           child: Container(
                             height: MediaQuery.of(context).size.width * 0.5,

@@ -118,11 +118,13 @@ class _DialogaddCarState extends State<DialogaddCar> {
                   }
                   Navigator.pop(context); // 추가 버튼 클릭 시 창 닫기
 
-                  // // 추가된 차량 정보 GET 하기 위해, 버튼 클릭 시 새로고침 구현
-                  // Navigator.of(context)
-                  // .push(new MaterialPageRoute(
-                  // builder: (context) => const BookMarkView()));
-                  //     // .whenComplete(widget.addCheck1)
+                  // 여기가 문제!!
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (BuildContext context) => ChangeNotifierProvider(
+                        create: (context) => UserProvider(),
+                        // child: MyApp()
+                        child: BookMarkView(),
+                          )));
                   },
                 child: Container(
                     child: Text('차량 추가', style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.w500)))),

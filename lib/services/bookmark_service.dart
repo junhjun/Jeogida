@@ -40,8 +40,8 @@ class BookMarkService {
   //     throw Exception("Fail to POST bookMarkCar");
   //   }
   // }
-  static Future<BookMarkCarList> postBookmarkCar(String name, String num, String userid) async {
-    final url = Uri.parse(serverAddress + "car/" + userid);
+  static Future<BookMarkCarList> postBookmarkCar(String name, String num, String userCode) async {
+    final url = Uri.parse(serverAddress + "car/" + userCode);
     final headers = {"Content-type": "application/json"};
     final response = await http.post(url,
         headers: headers,

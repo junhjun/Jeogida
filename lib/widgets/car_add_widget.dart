@@ -104,12 +104,12 @@ class _DialogaddCarState extends State<DialogaddCar> {
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0))),
                 ),
                 onPressed: () {
+                  // ###
                   if ((inputCarName.text != '') & (inputCarNum.text != '')) {
-                    BookMarkService.postBookmarkCar(
+                    context.read<BookMarkProvider>().postCar(
                         inputCarName.text,
                         inputCarNum.text,
-                        context.read<UserProvider>().user!.id!
-                    );
+                        context.read<UserProvider>().user!.id!);
                   }
                   Navigator.pop(context); // 추가 버튼 클릭 시 창 닫기
                   // 추가된 차량 정보 GET 하기 위해, 버튼 클릭 시 새로고침 구현

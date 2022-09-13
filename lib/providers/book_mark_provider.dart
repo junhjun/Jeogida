@@ -40,24 +40,33 @@ class BookMarkProvider extends ChangeNotifier {
   }
 
 
+  // 차량 추가
+  void postCar(String name, String num, String userCode) async {
+    if (userCode != null) {
+      await BookMarkService.postBookmarkCar(name, num, userCode);
+      notifyListeners();
+    }
+  }
+
+
+
+
   // 체크박스 - 주차장
-  List _isCheckedSpot = [];
+  List _isCheckedSpot = List.filled(10, false);
   bool _allCheckedSpot = false;
 
   List get isCheckedSpot => _isCheckedSpot;
   bool get allCheckedSpot => _allCheckedSpot;
 
-  void addCheckSpot() {
-    _isCheckedSpot.add(false);
-    notifyListeners();
-  }
-  void delCheckSpot() {
-    for (int i = 0; i < _isCheckedSpot.length; i++) {
-      if (_isCheckedSpot[i] == true) {
-        _isCheckedSpot.removeAt(i);
-        i = -1;
-      }
+  void flipCheckSpot() {
+    if (_isCheckedSpot.every((x) => x) == false) {
+      _isCheckedSpot.fillRange(0, _isCheckedSpot.length, true);
+    }
+    else {
+      _isCheckedSpot.fillRange(0, _isCheckedSpot.length, false);
     }
     notifyListeners();
   }
+
+  // 주차장 추가
 }

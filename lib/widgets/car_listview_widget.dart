@@ -32,11 +32,11 @@ class _CarListViewState extends State<CarListView> {
       builder:
           (BuildContext context, AsyncSnapshot<BookMarkCarList> snapshot) {
         if (snapshot.hasData) {
-          print("-------");
-          for(int i=0; i<snapshot.data!.cars.length; i++) {
-            print(context.read<BookMarkProvider>().isCheckedCar[i]);
-          }
-          print("-------");
+          // print("-------");
+          // for(int i=0; i<snapshot.data!.cars.length; i++) {
+          //   print(context.read<BookMarkProvider>().isCheckedCar[i]);
+          // }
+          // print("-------");
           return Container(
             width: MediaQuery.of(context).size.width * 0.88,
             child: ListView.builder(

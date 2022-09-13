@@ -3,13 +3,19 @@ import 'package:logger/logger.dart';
 import '../models/book_mark_car.dart';
 import '../models/car_info.dart';
 import '../services/bookmark_service.dart';
+import 'package:parking_spot_frontend/models/book_mark_car_list.dart';
+
 
 
 class BookMarkProvider extends ChangeNotifier {
   final logger = Logger(printer: PrettyPrinter(methodCount: 0, colors: false));
 
+  // BookMarkCarList? _bookMarkCarList;
+  // BookMarkCarList? get bookMarkCarList => _bookMarkCarList;
+
+
   // 체크박스 - 차량
-  List _isCheckedCar = List.filled(10, false); // 추후에 수정 // 체크 여부 리스트 (true : 체크O / false : 체크X)
+  List _isCheckedCar = List.filled(20, false); // 추후에 수정 // 체크 여부 리스트 (true : 체크O / false : 체크X)
   bool _allCheckedCar = false; // 전체선택 default 값 (체크x)
 
   List get isCheckedCar => _isCheckedCar; // getter 생성
@@ -41,9 +47,9 @@ class BookMarkProvider extends ChangeNotifier {
 
 
   // 차량 추가
-  void postCar(String name, String num, String userCode) async {
+  void postCar(String name, String num, String userCode) {
     if (userCode != null) {
-      await BookMarkService.postBookmarkCar(name, num, userCode);
+      BookMarkService.postBookmarkCar(name, num, userCode);
       notifyListeners();
     }
   }

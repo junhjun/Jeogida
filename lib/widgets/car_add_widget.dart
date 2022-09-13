@@ -7,10 +7,12 @@ import '../models/book_mark_car.dart';
 import '../models/book_mark_car_list.dart';
 import '../services/bookmark_service.dart';
 
+import 'package:parking_spot_frontend/screens/bookmark_view.dart';
 
 
 class DialogaddCar extends StatefulWidget {
-  const DialogaddCar({Key? key}) : super(key: key);
+  const DialogaddCar({Key? key, required this.userCode}) : super(key: key);
+  final String userCode;
 
   @override
   State<DialogaddCar> createState() => _DialogaddCarState();
@@ -21,6 +23,7 @@ class _DialogaddCarState extends State<DialogaddCar> {
 
   var inputCarName = TextEditingController();
   var inputCarNum = TextEditingController();
+
 
   @override
   void initState() {
@@ -104,19 +107,22 @@ class _DialogaddCarState extends State<DialogaddCar> {
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0))),
                 ),
                 onPressed: () {
-                  // ###
                   if ((inputCarName.text != '') & (inputCarNum.text != '')) {
-                    context.read<BookMarkProvider>().postCar(
+                    BookMarkService.postBookmarkCar(
                         inputCarName.text,
                         inputCarNum.text,
-                        context.read<UserProvider>().user!.id!);
+                        widget.userCode
+                        // context.read<UserProvider>().user!.id!
+                        // '117893793138796152457'
+                        );
                   }
                   Navigator.pop(context); // 추가 버튼 클릭 시 창 닫기
-                  // 추가된 차량 정보 GET 하기 위해, 버튼 클릭 시 새로고침 구현
+
+                  // // 추가된 차량 정보 GET 하기 위해, 버튼 클릭 시 새로고침 구현
                   // Navigator.of(context)
                   // .push(new MaterialPageRoute(
-                  // builder: (context) => BookMarkView()))
-                  // .whenComplete(widget.addCheck1);
+                  // builder: (context) => const BookMarkView()));
+                  //     // .whenComplete(widget.addCheck1)
                   },
                 child: Container(
                     child: Text('차량 추가', style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.w500)))),

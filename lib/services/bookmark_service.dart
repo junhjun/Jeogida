@@ -27,19 +27,6 @@ class BookMarkService {
     }
   }
 
-  // static void postBookMarkCar(int userCode, BookMarkCar car) async {
-  //   final response = await http.post(
-  //     Uri.parse("${serverAddress}car/$userCode"),
-  //     headers: <String, String>{
-  //       'Content-Type': 'application/json; charset=UTF-8',
-  //     },
-  //     body:
-  //         jsonEncode(<String, String>{"name": car.name, "number": car.number}),
-  //   );
-  //   if (response.statusCode != 200 && response.statusCode != 201) {
-  //     throw Exception("Fail to POST bookMarkCar");
-  //   }
-  // }
   static Future<BookMarkCarList> postBookmarkCar(String name, String num, String userCode) async {
     final url = Uri.parse(serverAddress + "car/" + userCode);
     final headers = {"Content-type": "application/json"};
@@ -53,6 +40,7 @@ class BookMarkService {
     if (response.statusCode == 200) {
       return BookMarkCarList.fromJson(jsonDecode(responseBody));
     } else {
+      print(response.statusCode);
       throw Exception("Failed to load bookMarkCar");
     }
   }

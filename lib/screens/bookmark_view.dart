@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/cupertino.dart';
+import 'package:parking_spot_frontend/main.dart';
+import 'package:parking_spot_frontend/screens/mypage_view.dart';
+import 'package:parking_spot_frontend/widgets/main_widget.dart';
 
 
 import '../models/book_mark_car.dart';
@@ -12,6 +15,7 @@ import '../services/bookmark_service.dart';
 
 import 'package:provider/provider.dart';
 import 'package:parking_spot_frontend/providers/book_mark_provider.dart';
+import 'package:parking_spot_frontend/providers/user_provider.dart';
 import 'package:parking_spot_frontend/widgets/car_listview_widget.dart';
 import 'package:parking_spot_frontend/widgets/spot_listview_widget.dart';
 
@@ -27,12 +31,10 @@ class BookMarkView extends StatefulWidget {
 }
 
 class _BookMarkViewState extends State<BookMarkView> {
-
   // 수정 예정
   var data_spot = []; // 주차공간 정보 JSON 데이터 담을 리스트
   var ischecked_list2 = []; // 체크 여부 리스트
   bool allchecked2 = false; // 전체선택 시, 모든 값을 true로 변경하도록 설계
-
 
   @override
   void initState() {
@@ -41,6 +43,8 @@ class _BookMarkViewState extends State<BookMarkView> {
 
   @override
   Widget build(BuildContext context) {
+    String Code = context.read<UserProvider>().user!.id!;
+
     return DefaultTabController(
       initialIndex: 0, // 0 : 차량 탭 먼저 조회, 1 : 주차장 탭 먼저 조회
       length: 2,
@@ -97,6 +101,7 @@ class _BookMarkViewState extends State<BookMarkView> {
                                     shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))),
                                   ),
                                   onPressed: () {
+                                    // print(context.read<UserProvider>().user!.id!);
                                     print("------------------");
                                     print(context.read<BookMarkProvider>().isCheckedCar);
                                     context.read<BookMarkProvider>().flipCheckCar();
@@ -157,12 +162,19 @@ class _BookMarkViewState extends State<BookMarkView> {
                             // primary: Colors.white, // 버튼 내부 글자색
                             // textStyle: TextStyle(fontSize: 19, color: Colors.white, fontWeight: FontWeight.w500),
                           ),
-                          onPressed: () {
-                            showDialog(
+                          onPressed: () async {
+                            await showDialog(
                                 context: context,
                                 builder: (context) {
-                                  return DialogaddCar();
+                                  return DialogaddCar(userCode : Code);
                                 });
+                            // 여기가 문제
+                            Navigator.push(context, MaterialPageRoute(
+                                builder: (BuildContext context) => ChangeNotifierProvider(
+                                  create: (context) => UserProvider(),
+                                  // child: MyApp()
+                                  child: BookMarkView(),
+                                    )));
                           },
                           child: Container(
                             height: MediaQuery.of(context).size.width * 0.5,

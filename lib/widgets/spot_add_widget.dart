@@ -18,15 +18,15 @@ class DialogaddSpot extends StatefulWidget {
 class _DialogaddSpotState extends State<DialogaddSpot> {
   var logger = Logger(printer: PrettyPrinter(methodCount: 0, colors: false));
 
-  // var inputData3 = TextEditingController();
-  // var _valueList = [];
-  // var _selectedValue;
+  var inputData3 = TextEditingController();
+  var _valueList = [];
+  var _selectedValue;
 
   @override
   void initState() {
     super.initState();
-    // _valueList = ['차량1', '차량2', '차량3', '차량4'];
-    // _selectedValue = _valueList[0];
+    _valueList = ['차량1', '차량2', '차량3', '차량4'];
+    _selectedValue = _valueList[0];
   }
 
   @override

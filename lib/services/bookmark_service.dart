@@ -57,7 +57,7 @@ class BookMarkService {
     }
   }
 
-  static void deleteBookMarkCar(int userCode, int carId) async {
+  static void deleteBookMarkCar(String userCode, int carId) async {
     final http.Response response = await http.delete(
       Uri.parse("${serverAddress}car/$userCode/$carId"),
       headers: <String, String>{

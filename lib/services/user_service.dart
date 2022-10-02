@@ -10,7 +10,7 @@ class UserService {
       Logger(printer: PrettyPrinter(methodCount: 0, colors: false));
 
   static Future<void> postUser(User user) async {
-    http.Response response = await http.post(Uri.parse("${serverAddress}user"),
+    http.Response response = await http.post(Uri.parse("$serverAddress/user"),
         headers: <String, String>{
           "Content-Type": "application/json",
         },

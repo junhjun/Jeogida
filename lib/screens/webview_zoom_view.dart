@@ -5,8 +5,8 @@ import 'package:logger/logger.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewZoomView extends StatefulWidget {
-  WebViewZoomView({required this.mapId, Key? key}) : super(key: key);
-  int? mapId;
+  const WebViewZoomView({required this.mapId, Key? key}) : super(key: key);
+  final int? mapId;
 
   @override
   State<WebViewZoomView> createState() => _WebViewZoomViewState();

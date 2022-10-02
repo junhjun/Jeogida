@@ -1,4 +1,4 @@
-import 'package:parking_spot_frontend/models/book_mark_space.dart';
+import 'package:parking_spot_frontend/models/space.dart';
 
 class FloorInfo {
   int? id;
@@ -38,11 +38,11 @@ class FloorInfo {
 
   @override
   String toString() {
-    return "id : $id\n"
-        "name : $name\n"
-        "location_id : $locationId\n"
-        "map_id : $mapId\n"
-        "total : $total\n"
+    return "id : $id"
+        "name : $name"
+        "location_id : $locationId"
+        "map_id : $mapId"
+        "total : $total"
         "parked_num : $parkedNum";
   }
 }
@@ -56,7 +56,7 @@ class SpaceInfo {
     return SpaceInfo(spaces);
   }
 
-  FloorInfo? getFloorInfo(BookMarkSpace? selected) {
+  FloorInfo? getFloorInfo(Space? selected) {
     if (selected != null) {
       for (int i = 0; i < spaces.length; i++) {
         if (spaces[i].id == selected.id) {

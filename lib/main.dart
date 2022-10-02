@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:parking_spot_frontend/providers/find_car_provider.dart';
 import 'package:parking_spot_frontend/providers/find_space_provider.dart';
+import 'package:parking_spot_frontend/providers/location_provider.dart';
 import 'package:parking_spot_frontend/providers/user_provider.dart';
 import 'package:parking_spot_frontend/screens/login_view.dart';
 import 'package:parking_spot_frontend/widgets/main_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 import 'utility/register_web_webview_stub.dart'
     if (dart.library.html) 'utility/register_web_webview.dart';
@@ -32,21 +34,18 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (_) => UserProvider()),
-            ChangeNotifierProvider(create: (_) => FindCarProvider()),
-            ChangeNotifierProvider(create: (_) => FindSpaceProvider()),
-            FutureProvider(
-                create: (context) => FindCarProvider().setCarInfo(),
-                initialData: null),
-            FutureProvider(
-                create: (context) => FindSpaceProvider().setSpaceInfo(),
-                initialData: null)
-          ],
+          providers: providers,
           child: const BuildBody(),
         ));
   }
 }
+
+List<SingleChildWidget> providers = [
+  ChangeNotifierProvider(create: (_) => UserProvider()),
+  ChangeNotifierProvider(create: (_) => FindCarProvider()),
+  ChangeNotifierProvider(create: (_) => FindSpaceProvider()),
+  ChangeNotifierProvider(create: (_) => LocationProvider()),
+];
 
 class BuildBody extends StatefulWidget {
   const BuildBody({Key? key}) : super(key: key);
@@ -64,12 +63,6 @@ class _BuildBodyState extends State<BuildBody> {
       // if not logined
       body = const LoginView(); // Login View
     } else {
-      context
-          .read<FindCarProvider>()
-          .setBookMarkCarList(context.watch<UserProvider>().user!.id);
-      context
-          .read<FindSpaceProvider>()
-          .setBookMarkSpaceList(context.watch<UserProvider>().user!.id);
       body = const MainWidget(); // Main View
     }
     return body;

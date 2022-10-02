@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:parking_spot_frontend/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -9,11 +8,10 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final buttonStyle = ElevatedButton.styleFrom(
-        primary: Colors.white,
+        backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)));
     const textStyle = TextStyle(
         color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15);
-    var logger = Logger(printer: PrettyPrinter(methodCount: 0, colors: false));
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -37,8 +35,7 @@ class LoginView extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.05,
                 child: ElevatedButton.icon(
                   onPressed: () {
-                    logger.i("Login API Called");
-                    context.read<UserProvider>().handleLogIn();
+                    context.read<UserProvider>().logIn();
                   },
                   icon: const Image(
                       image: AssetImage("assets/google.png"),

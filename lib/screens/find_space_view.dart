@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:parking_spot_frontend/providers/find_space_provider.dart';
 import 'package:parking_spot_frontend/screens/webview_zoom_view.dart';
-import 'package:parking_spot_frontend/widgets/book_mark_space_dropdown.dart';
+import 'package:parking_spot_frontend/widgets/bookmark_space_dropdown.dart';
 import 'package:parking_spot_frontend/widgets/space_info_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import '../providers/user_provider.dart';
 import '../widgets/web_view_widget.dart';
 
 class FindSpace extends StatefulWidget {
@@ -18,13 +19,16 @@ class FindSpace extends StatefulWidget {
 }
 
 class _MyAppState extends State<FindSpace> {
-  final _infoTextStyle = const TextStyle(color: Colors.grey, fontSize: 13);
-  final controller = Completer<WebViewController>(); // WebView Controller
   var logger = Logger(printer: PrettyPrinter(methodCount: 0, colors: false));
+  final controller = Completer<WebViewController>(); // WebView Controller
+  final _infoTextStyle = const TextStyle(color: Colors.grey, fontSize: 13);
 
   @override
   void initState() {
     super.initState();
+    context
+        .read<FindSpaceProvider>()
+        .setBookMarkSpaceList(context.read<UserProvider>().user!.id);
   }
 
   @override
@@ -34,6 +38,7 @@ class _MyAppState extends State<FindSpace> {
     var map = (selectedIdx != null && spaceInfo != null)
         ? spaceInfo.spaces[selectedIdx].mapId
         : null;
+
     return Scaffold(
       backgroundColor: const Color(0xffededed),
       body: Container(
@@ -86,7 +91,7 @@ class _MyAppState extends State<FindSpace> {
             // Zoom text button
             Center(
                 child: TextButton(
-              style: TextButton.styleFrom(primary: Colors.grey),
+              style: TextButton.styleFrom(foregroundColor: Colors.grey),
               onPressed: () {
                 Navigator.push(
                     context,

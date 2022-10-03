@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:parking_spot_frontend/models/book_mark_space.dart';
+import 'package:parking_spot_frontend/models/space.dart';
 import 'package:parking_spot_frontend/providers/find_space_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -22,23 +22,25 @@ class _BookMarkSpaceWidgetState extends State<BookMarkSpaceWidget> {
 
   @override
   Widget build(BuildContext context) {
+    List<Space> spaceList =
+        context.watch<FindSpaceProvider>().bookMarkSpaceList;
+    List<DropdownMenuItem<Space>> dropDownItem = spaceList
+        .map((e) => DropdownMenuItem(
+            value: e,
+            child: Text(
+              e.name,
+              style: _dropdownTextStyle,
+            )))
+        .toList();
+    Space? selectedSpace = context.watch<FindSpaceProvider>().selectedLocation;
+
     return DropdownButton(
-        items: context
-            .watch<FindSpaceProvider>()
-            .bookMarkSpaceList
-            ?.spaces
-            .map((e) => DropdownMenuItem(
-                value: e,
-                child: Text(
-                  "위치  |  ${e.name}",
-                  style: _dropdownTextStyle,
-                )))
-            .toList(),
-        value: context.watch<FindSpaceProvider>().selectedLocation,
-        onChanged: (BookMarkSpace? value) {
+        items: dropDownItem,
+        value: selectedSpace,
+        onChanged: (Space? value) {
           context.read<FindSpaceProvider>().setLocation(value);
           context.read<FindSpaceProvider>().setSpaceInfo();
         },
-        hint: Text("차량을 선택하세요", style: _dropdownTextStyle));
+        hint: Text("주차장을 선택하세요", style: _dropdownTextStyle));
   }
 }

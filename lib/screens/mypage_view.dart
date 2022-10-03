@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:parking_spot_frontend/providers/find_car_provider.dart';
 import 'package:parking_spot_frontend/providers/find_space_provider.dart';
+import 'package:parking_spot_frontend/providers/location_provider.dart';
 import 'package:parking_spot_frontend/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -13,32 +14,30 @@ class MyPageView extends StatefulWidget {
 }
 
 class _MyPageViewState extends State<MyPageView> {
+  var logger = Logger(printer: PrettyPrinter(methodCount: 0, colors: false));
+
   final nameTextStyle =
       const TextStyle(fontSize: 27, fontWeight: FontWeight.bold);
   final iconColor = const Color(0xff75BCC6);
   final buttonStyle = TextButton.styleFrom(
-    primary: Colors.black,
+    foregroundColor: Colors.black,
     padding: const EdgeInsets.all(0.0),
     textStyle: const TextStyle(fontSize: 25),
   );
   final infoTextStyle = const TextStyle(fontSize: 20);
-  var logger = Logger(printer: PrettyPrinter(methodCount: 0, colors: false));
 
   @override
   Widget build(BuildContext context) {
-    // logger.i(context.watch<UserProvider>().user);
     return Scaffold(
       backgroundColor: const Color(0xffededed),
-      // padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 50),
       body: Center(
         child: Container(
-          height: MediaQuery.of(context).size.height * 0.35,
-          margin: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-          padding: const EdgeInsets.fromLTRB(0, 13, 0, 0),
+          margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(15)),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Center(
                 child: CircleAvatar(
@@ -47,16 +46,14 @@ class _MyPageViewState extends State<MyPageView> {
                       context.watch<UserProvider>().user!.photoUrl!),
                 ),
               ),
-              // const SizedBox(height: 20),
+              const SizedBox(height: 10),
               Center(
-                child: Container(
-                  padding: const EdgeInsets.only(bottom: 15.0),
-                  child: Text(context.watch<UserProvider>().user!.displayName!,
-                      style: nameTextStyle),
-                ),
+                child: Text(context.watch<UserProvider>().user!.displayName!,
+                    style: nameTextStyle),
               ),
+              const SizedBox(height: 10),
               Container(
-                margin: const EdgeInsets.fromLTRB(40, 10, 20, 0),
+                padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Column(
                   children: [
                     Row(
@@ -72,9 +69,9 @@ class _MyPageViewState extends State<MyPageView> {
                           onPressed: () {
                             context.read<FindSpaceProvider>().clear();
                             context.read<FindCarProvider>().clear();
-                            context.read<UserProvider>().handleLogOut();
+                            context.read<LocationProvider>().clear();
+                            context.read<UserProvider>().logOut();
                             context.read<UserProvider>().clear();
-                            logger.i("Logout API Called");
                           },
                           icon: Icon(Icons.logout, color: iconColor),
                           label: Text("로그아웃", style: infoTextStyle),

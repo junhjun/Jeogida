@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../screens/bookmark_view.dart';
 import '../screens/find_car_view.dart';
 import '../screens/find_space_view.dart';
@@ -34,8 +33,8 @@ class _MainWidgetState extends State<MainWidget> {
 
   final titles = ["내 차 찾기", "주차공간 찾기", "즐겨찾기", "마이페이지"]; // AppBar titles
 
-  var currentIndex;
-  var customAppBar;
+  late PreferredSizeWidget? customAppBar;
+  late int currentIndex;
 
   void onTap(int index) {
     setState(() {

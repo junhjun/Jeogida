@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:parking_spot_frontend/providers/find_car_provider.dart';
-import 'package:parking_spot_frontend/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../models/book_mark_car.dart';
-import '../models/book_mark_car_list.dart';
-import '../services/bookmark_service.dart';
+import '../models/car.dart';
 
 class BookMarkCarWidget extends StatefulWidget {
   const BookMarkCarWidget({Key? key}) : super(key: key);
@@ -26,20 +23,22 @@ class _BookMarkCarWidgetState extends State<BookMarkCarWidget> {
 
   @override
   Widget build(BuildContext context) {
+    logger.i("car dropdown menu build");
+    List<Car> carList = context.watch<FindCarProvider>().bookMarkCarList;
+    List<DropdownMenuItem<Car>> dropDownMenuItem = carList
+        .map(((e) => DropdownMenuItem(
+            value: e,
+            child: Text(
+              "${e.name} |  ${e.number}",
+              style: _dropdownTextStyle,
+            ))))
+        .toList();
+    Car? selectedCar = context.watch<FindCarProvider>().selectedCar;
+
     return DropdownButton(
-        items: context
-            .watch<FindCarProvider>()
-            .bookMarkCarList
-            ?.cars
-            .map((e) => DropdownMenuItem(
-                value: e,
-                child: Text(
-                  "차량번호  |  ${e.number}",
-                  style: _dropdownTextStyle,
-                )))
-            .toList(),
-        value: context.watch<FindCarProvider>().selectedCar,
-        onChanged: (BookMarkCar? value) {
+        items: dropDownMenuItem,
+        value: selectedCar,
+        onChanged: (Car? value) {
           context.read<FindCarProvider>().setSelectedCar(value);
           context.read<FindCarProvider>().setCarInfo();
         },

@@ -12,8 +12,8 @@ class BookMarkSpaceWidget extends StatefulWidget {
 }
 
 class _BookMarkSpaceWidgetState extends State<BookMarkSpaceWidget> {
+  final _dropdownTextStyle = const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w500, fontFamily: 'GmarketSans');
   var logger = Logger(printer: PrettyPrinter(methodCount: 0, colors: false));
-  final _dropdownTextStyle = const TextStyle(fontSize: 15, color: Colors.black);
 
   @override
   void initState() {
@@ -22,6 +22,7 @@ class _BookMarkSpaceWidgetState extends State<BookMarkSpaceWidget> {
 
   @override
   Widget build(BuildContext context) {
+    logger.i("space dropdown menu build");
     List<Space> spaceList =
         context.watch<FindSpaceProvider>().bookMarkSpaceList;
     List<DropdownMenuItem<Space>> dropDownItem = spaceList
@@ -34,13 +35,24 @@ class _BookMarkSpaceWidgetState extends State<BookMarkSpaceWidget> {
         .toList();
     Space? selectedSpace = context.watch<FindSpaceProvider>().selectedLocation;
 
-    return DropdownButton(
-        items: dropDownItem,
-        value: selectedSpace,
-        onChanged: (Space? value) {
-          context.read<FindSpaceProvider>().setLocation(value);
-          context.read<FindSpaceProvider>().setSpaceInfo();
-        },
-        hint: Text("주차장을 선택하세요", style: _dropdownTextStyle));
+    return Container(
+      padding: EdgeInsets.only(left: 20, right: 15),
+      decoration: BoxDecoration(
+        border: Border.all(color: Color(0xffe7e7e7)),
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: DropdownButton(
+          borderRadius: BorderRadius.circular(5),
+          items: dropDownItem,
+          value: selectedSpace,
+          onChanged: (Space? value) {
+            context.read<FindSpaceProvider>().setLocation(value);
+            context.read<FindSpaceProvider>().setSpaceInfo();
+          },
+          isExpanded: true,
+          underline: Container(),
+          dropdownColor: Colors.white,
+          hint: Text("주차장을 선택하세요", style: _dropdownTextStyle)),
+    );
   }
 }

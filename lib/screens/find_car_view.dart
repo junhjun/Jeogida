@@ -20,7 +20,7 @@ class FindCar extends StatefulWidget {
 class _MyAppState extends State<FindCar> {
   var logger = Logger(printer: PrettyPrinter(methodCount: 0, colors: false));
   final controller = Completer<WebViewController>(); // WebViewController
-  final _infoTextStyle = const TextStyle(fontSize: 14, color: Colors.black);
+  final _infoTextStyle = const TextStyle(fontSize: 11, color: Colors.black, fontFamily: 'GmarketSans');
 
   @override
   void initState() {
@@ -47,9 +47,16 @@ class _MyAppState extends State<FindCar> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // DropDownButton
-            const BookMarkCarWidget(),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: const BookMarkCarWidget(),
+            ),
             // Car Info Text Widget
             const CarInfoWidget(),
+            // Divider
+            Container(
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 15),
+                child: const Divider(thickness: 0.3, color: Colors.grey)),
             // Icons
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -57,14 +64,14 @@ class _MyAppState extends State<FindCar> {
                 Row(
                   children: [
                     const Icon(Icons.circle,
-                        size: 8, color: Colors.cyan), // 현재 위치 아이콘
+                        size: 8, color: Color(0xfff17d7d)), // 현재 위치 아이콘
                     Container(
                         padding: const EdgeInsets.fromLTRB(5, 0, 15, 0),
                         child: Text('현재 위치', style: _infoTextStyle)),
                     const Icon(Icons.square,
-                        size: 10, color: Colors.cyan), // 주차 위치 아이콘
+                        size: 10, color: Color(0xfff17c7d)), // 주차 위치 아이콘
                     Container(
-                        padding: const EdgeInsets.fromLTRB(5, 0, 3, 0),
+                        padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                         child: Text('주차 위치', style: _infoTextStyle)),
                     WebViewControls(
                         controller: controller, mapId: mapId, key: UniqueKey()),
@@ -79,15 +86,22 @@ class _MyAppState extends State<FindCar> {
             // Zoom info text
             Center(
                 child: TextButton(
-              style: TextButton.styleFrom(foregroundColor: Colors.grey),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => WebViewZoomView(mapId: mapId)));
-              },
-              child: const Text("여기를 클릭하면 확대해서 볼 수 있습니다."),
-            )),
+                  style: TextButton.styleFrom(primary: Colors.grey),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => WebViewZoomView(mapId: mapId)));
+                    },
+                  child: const Text("여기를 클릭하면 확대해서 볼 수 있습니다.",
+                      style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w200,
+                          fontFamily: 'GmarketSans'
+                      )
+                  ),
+                )
+            ),
           ],
         ),
       ),

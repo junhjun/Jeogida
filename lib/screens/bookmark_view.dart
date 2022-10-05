@@ -32,12 +32,12 @@ class _BookMarkViewState extends State<BookMarkView>
     return TabBar(
         controller: _tabController,
         tabs: const <Tab>[Tab(text: "차량"), Tab(text: "주차장")],
-        indicatorWeight: 6,
+        indicatorWeight: 7,
         indicatorSize: TabBarIndicatorSize.tab,
         indicatorColor: Colors.cyan,
-        labelStyle: const TextStyle(fontSize: 18),
+        labelStyle: const TextStyle(color: Colors.black, fontSize: 18, fontFamily: 'GmarketSans'),
         labelColor: Colors.black,
-        unselectedLabelColor: Colors.black54);
+        unselectedLabelColor: Color(0xff818181));
   }
 
   @override

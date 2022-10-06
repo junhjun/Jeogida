@@ -8,10 +8,10 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final buttonStyle = ElevatedButton.styleFrom(
-        backgroundColor: Colors.white,
+        primary: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)));
     const textStyle = TextStyle(
-        color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15);
+        color: Colors.black, fontWeight: FontWeight.w500, fontSize: 15, fontFamily: 'GmarketSans');
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -24,15 +24,19 @@ class LoginView extends StatelessWidget {
                   child: Image(
                 image: AssetImage("assets/logo.png"),
               )),
-              const Text("저기다",
-                  style: TextStyle(
-                      color: Color(0xFF23CCD3),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 50)),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+              Container(
+                margin: EdgeInsets.only(top: 10),
+                child: const Text("저기다",
+                    style: TextStyle(
+                        color: Color(0xFF23CCD3),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 55,
+                        fontFamily: 'GmarketSans')),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.06),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.8,
-                height: MediaQuery.of(context).size.height * 0.05,
+                width: MediaQuery.of(context).size.width * 0.7,
+                height: MediaQuery.of(context).size.height * 0.055,
                 child: ElevatedButton.icon(
                   onPressed: () {
                     context.read<UserProvider>().logIn();

@@ -13,7 +13,7 @@ class BookMarkCarWidget extends StatefulWidget {
 }
 
 class _BookMarkCarWidgetState extends State<BookMarkCarWidget> {
-  final _dropdownTextStyle = const TextStyle(fontSize: 15, color: Colors.black);
+  final _dropdownTextStyle = const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w500, fontFamily: 'GmarketSans');
   var logger = Logger(printer: PrettyPrinter(methodCount: 0, colors: false));
 
   @override
@@ -29,19 +29,30 @@ class _BookMarkCarWidgetState extends State<BookMarkCarWidget> {
         .map(((e) => DropdownMenuItem(
             value: e,
             child: Text(
-              "${e.name} |  ${e.number}",
+              "${e.name}  |  ${e.number}",
               style: _dropdownTextStyle,
             ))))
         .toList();
     Car? selectedCar = context.watch<FindCarProvider>().selectedCar;
 
-    return DropdownButton(
-        items: dropDownMenuItem,
-        value: selectedCar,
-        onChanged: (Car? value) {
-          context.read<FindCarProvider>().setSelectedCar(value);
-          context.read<FindCarProvider>().setCarInfo();
-        },
-        hint: Text("차량을 선택하세요", style: _dropdownTextStyle));
+    return Container(
+      padding: EdgeInsets.only(left: 20, right: 15),
+      decoration: BoxDecoration(
+          border: Border.all(color: Color(0xffe7e7e7)),
+          borderRadius: BorderRadius.circular(5),
+      ),
+      child: DropdownButton(
+          borderRadius: BorderRadius.circular(5),
+          items: dropDownMenuItem,
+          value: selectedCar,
+          onChanged: (Car? value) {
+            context.read<FindCarProvider>().setSelectedCar(value);
+            context.read<FindCarProvider>().setCarInfo();
+          },
+          isExpanded: true,
+          underline: Container(),
+          dropdownColor: Colors.white,
+          hint: Text("차량을 선택하세요", style: _dropdownTextStyle)),
+    );
   }
 }

@@ -21,7 +21,7 @@ class FindSpace extends StatefulWidget {
 class _MyAppState extends State<FindSpace> {
   var logger = Logger(printer: PrettyPrinter(methodCount: 0, colors: false));
   final controller = Completer<WebViewController>(); // WebView Controller
-  final _infoTextStyle = const TextStyle(color: Colors.grey, fontSize: 13);
+  final _infoTextStyle = const TextStyle(fontSize: 11, color: Colors.black, fontFamily: 'GmarketSans');
 
   @override
   void initState() {
@@ -70,14 +70,14 @@ class _MyAppState extends State<FindSpace> {
                       padding: const EdgeInsets.fromLTRB(5, 0, 13, 0),
                       child: Text('주차 가능', style: _infoTextStyle)),
                   const Icon(Icons.square,
-                      size: 9, color: Color(0xffafaeae)), // 주차 위치 아이콘
+                      size: 9, color: Color(0xffa2a1a1)), // 주차 위치 아이콘
                   Container(
                       padding: const EdgeInsets.fromLTRB(5, 0, 13, 0),
                       child: Text('장애인 구역', style: _infoTextStyle)),
                   const Icon(Icons.square,
                       size: 9, color: Color(0xffee162e)), // 주차 위치 아이콘
                   Container(
-                      padding: const EdgeInsets.fromLTRB(5, 0, 3, 0),
+                      padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                       child: Text('주차 불가', style: _infoTextStyle)),
                   WebViewControls(
                       controller: controller, mapId: map, key: UniqueKey()),
@@ -91,15 +91,22 @@ class _MyAppState extends State<FindSpace> {
             // Zoom text button
             Center(
                 child: TextButton(
-              style: TextButton.styleFrom(foregroundColor: Colors.grey),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => WebViewZoomView(mapId: map)));
-              },
-              child: const Text("여기를 클릭하면 확대해서 볼 수 있습니다."),
-            )),
+                  style: TextButton.styleFrom(primary: Colors.grey),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => WebViewZoomView(mapId: map)));
+                    },
+                  child: const Text("여기를 클릭하면 확대해서 볼 수 있습니다.",
+                      style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w200,
+                          fontFamily: 'GmarketSans'
+                      )
+                  ),
+                )
+            ),
           ],
         ),
       ),

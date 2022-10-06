@@ -11,9 +11,8 @@ class CarInfoWidget extends StatefulWidget {
 }
 
 class _CarInfoState extends State<CarInfoWidget> {
-  final _currentAreaTextStyle = const TextStyle(
-      fontSize: 28, color: Colors.cyan, fontWeight: FontWeight.bold);
-  final _infoTextStyle = const TextStyle(fontSize: 14, color: Colors.grey);
+  final _currentAreaTextStyle = const TextStyle(fontSize: 28, color: Colors.cyan, fontWeight: FontWeight.bold, fontFamily: 'GmarketSans');
+  final _infoTextStyle = const TextStyle(fontSize: 14, color: Colors.grey, fontFamily: 'GmarketSans');
   var logger = Logger(printer: PrettyPrinter(methodCount: 0, colors: false));
 
   @override
@@ -51,11 +50,6 @@ class _CarInfoState extends State<CarInfoWidget> {
           Text(
               "- 주차시간 : ${duration.inMinutes ~/ 60}시간 ${duration.inMinutes % 60}분",
               style: _infoTextStyle),
-          // Divider
-          Container(
-            padding: const EdgeInsets.fromLTRB(0, 30, 0, 15),
-            child: const Divider(thickness: 0.3, color: Colors.grey),
-          ),
         ],
       ),
     );

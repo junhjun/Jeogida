@@ -16,7 +16,7 @@ class _SpaceInfoState extends State<SpaceInfoWidget> {
   @override
   Widget build(BuildContext context) {
     final disabledTextStyle = TextStyle(
-        color: Colors.grey[600], fontSize: 15, fontWeight: FontWeight.bold);
+        color: Colors.grey[600], fontSize: 15, fontWeight: FontWeight.bold, fontFamily: 'GmarketSans');
     final disabledButtonStyle = ElevatedButton.styleFrom(
         shape: const CircleBorder(),
         primary: Colors.grey[300],
@@ -24,13 +24,14 @@ class _SpaceInfoState extends State<SpaceInfoWidget> {
     final activeButtonStyle = ElevatedButton.styleFrom(
         shape: const CircleBorder(), primary: Colors.cyan);
     const activeTextStyle = TextStyle(
-        color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold);
+        color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold, fontFamily: 'GmarketSans');
     if (context.watch<FindSpaceProvider>().selectedLocation == null) {
       return const Center(
           child: Text("주차장을 선택하세요",
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
+                  fontFamily: 'GmarketSans',
                   color: Colors.cyan)));
     }
     return ListView.separated(

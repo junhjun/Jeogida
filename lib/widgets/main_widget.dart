@@ -15,13 +15,21 @@ class MainWidget extends StatefulWidget {
 class _MainWidgetState extends State<MainWidget> {
   final items = const <BottomNavigationBarItem>[
     BottomNavigationBarItem(
-        icon: Icon(Icons.explore_outlined), label: "내 차 찾기"),
+        icon: SizedBox(
+          height: 40,
+            child: Icon(Icons.drive_eta, size: 35)), label: "내 차 찾기"),
     BottomNavigationBarItem(
-        icon: Icon(Icons.search_outlined), label: "주차공간 찾기"),
+        icon: SizedBox(
+          height: 40,
+            child: Icon(Icons.local_parking_outlined, size: 35)), label: "주차공간 찾기"),
     BottomNavigationBarItem(
-        icon: Icon(Icons.star_outline_rounded), label: "즐겨찾기"),
+        icon: SizedBox(
+          height: 40,
+            child: Icon(Icons.star_border_rounded, size: 35)), label: "즐겨찾기"),
     BottomNavigationBarItem(
-        icon: Icon(Icons.person_outline_rounded), label: "마이페이지")
+        icon: SizedBox(
+          height: 40,
+            child: Icon(Icons.person_outline_rounded, size: 35)), label: "마이페이지"),
   ];
 
   final bodyList = [
@@ -64,7 +72,9 @@ class _MainWidgetState extends State<MainWidget> {
         items: items,
         currentIndex: currentIndex,
         onTap: onTap,
+        unselectedLabelStyle: TextStyle(fontSize: 12, fontFamily: 'GmarketSans'),
         unselectedItemColor: Colors.grey,
+        selectedLabelStyle: TextStyle(fontSize: 12, fontFamily: 'GmarketSans'),
         selectedItemColor: Colors.cyan,
       ),
       body: SafeArea(

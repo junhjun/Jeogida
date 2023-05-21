@@ -75,6 +75,8 @@
 
 ## 🧑‍💻 역할
 ▶ 앱 프론트엔드 개발
-- Flutter
+- **Flutter** : 하이브리드 앱 프론트엔드 개발
 
+- **GitLab** : Merge Request를 통한 협업
 
+- **REST API** : HTTP Request Method를 통한 클라이언트-서버 통신
